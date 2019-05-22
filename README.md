@@ -18,7 +18,6 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 * [Google Cloud Platform](https://console.cloud.google.com/)  
 * [GitHub - Forked E701 Documentation](https://github.com/w901-fr19-mi/myE701)
 <br>
-
 </details>
 
 
@@ -37,6 +36,8 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 | 26.06.19 | LB1 Theoretische Prüfung und Abschluss LB2 | - |
 | 03.07.19 | Sommersporttage | - |
 |          | Total Punkte | 27 (34) !
+
+<br>
 
 </details>
 
