@@ -4,10 +4,8 @@ Beispiel für einen Aufbau einer Dokumention des Lern- und Entwicklungsprozesses
 
 
 <details>
-<summary>Introduction</summary>
+<summary>Links</summary>
 <br>
-
-## Links
 
 * [Exam 701: DevOps Tools Engineer](https://www.lpi.org/our-certifications/exam-701-objectives)
 * [Linux Essentials Exam 010](https://www.lpi.org/our-certifications/exam-010-objectives)
@@ -20,7 +18,9 @@ Beispiel für einen Aufbau einer Dokumention des Lern- und Entwicklungsprozesses
 </details>
 
 
-## Fahrplan
+<details>
+<summary>Fahrplan</summary>
+<br>
 ***
 
 | Datum | behandelte Unterrichtsinhalte: | Gewichtung |
@@ -35,6 +35,7 @@ Beispiel für einen Aufbau einer Dokumention des Lern- und Entwicklungsprozesses
 | 03.07.19 | Sommersporttage | - |
 |          | Total Punkte | 27 (34) !
 
+</details>
 
 ## Dokumention des Lern- und Entwicklungsprozesses
 ***
