@@ -39,3 +39,22 @@ Beispiel für einen Aufbau einer Dokumention des Lern- und Entwicklungsprozesses
 ## Dokumention des Lern- und Entwicklungsprozesses
 ***
 
+### Kapitel: 702.1 Container Usage (Status: In Arbeit)
+
+**Weight**: 7 (7)
+
+**Beschreibung** Gegenüberstellung welche Linux Technologien für Container verwendet werden.
+
+**Tagesziele**, z.B. Erstellung einer Tabelle Linux - Container. 
+
+**Vorgehen**, z.B. Studieren Background Linux Namespaces vs. Container, UnionFS vs. Container Layer, Unix Prozesse (Jobs) vs. Docker run/start/stop
+
+**Beispiele und Arbeitsergebnisse**
+
+| Linux          | Container      | Beschreibung      |
+| -------------- | -------------- | ----------------- |
+| Namespaces     | laufender Container | beim Starten des Containers wird in eine andere Linux Namespace gewechselt |
+| UnionFS        | Image Layer         | Container Verwenden UnionFileSysteme um .... |
+| Unix Prozesse  | run/start/stop      | docker run/start/stop Befehle ähneln dem .... Subsystem |
+
+**Fazit und Aussicht**, z.B. Die Durcharbeitung von ... gab mir ein besseres Verständnis über die Funktionsweise von Containern.
