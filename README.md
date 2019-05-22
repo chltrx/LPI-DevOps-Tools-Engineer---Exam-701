@@ -1,4 +1,4 @@
-# ![](https://www.lpice.eu/fileadmin/_processed_/csm_LPIC-DevOpsToolsEngineer_43de3c4735.jpg) LPI DevOps Tools Engineer - Exam 701
+# ![](https://www.lpice.eu/fileadmin/_processed_/csm_LPIC-DevOpsToolsEngineer_43de3c4735.jpg) LPI DevOps Tools Engineer - Exam 701 & LPI Linux Essentials - Exam 010
 
 Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapiteln aus dem LPI DevOps Tools Engineer - Exam 701 & LPI Linux Essentials - Exam 010 des Wahlmoduls W901 an der TBZ.
 
