@@ -2,9 +2,23 @@
 
 Beispiel für einen Aufbau einer Dokumention des Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapiteln aus dem LPI E701 Exam
 
+
+<details>
+<summary>## Links</summary>
+
+* [Exam 701: DevOps Tools Engineer](https://www.lpi.org/our-certifications/exam-701-objectives)
+* [Linux Essentials Exam 010](https://www.lpi.org/our-certifications/exam-010-objectives)
+* [GitHub - Exam 701: DevOps Tools Engineer](https://github.com/w901-fr19-mi/E701)
+* [GitHub - E010 - Linux Essentials Exam 010](https://github.com/w901-fr19-mi/E010)
+* [BSCW - W901 - Grundlagen Linux, UNIX Betriebsystem](https://bscw.tbz.ch/bscw/bscw.cgi/26211645)
+* [Google Cloud Platform](https://console.cloud.google.com/)  
+* [GitHub - Forked E701 Documentation](https://github.com/w901-fr19-mi/myE701)
+
+</details>
+
+
 ## Fahrplan
 ***
-
 
 | Datum | behandelte Unterrichtsinhalte: | Gewichtung |
 | -------- | ------ | -------- |
@@ -18,13 +32,7 @@ Beispiel für einen Aufbau einer Dokumention des Lern- und Entwicklungsprozesses
 | 03.07.19 | Sommersporttage | - |
 |          | Total Punkte | 27 (34) !
 
-Kapitel aus E701 wurden in der Gruppe mit .... erarbeitet. Davon sind mindestens 14 Punkte selbständig erarbeitet worden. 
 
 ## Dokumention des Lern- und Entwicklungsprozesses
 ***
 
-## Links
-
-* [Exam 701: DevOps Tools Engineer](https://www.lpi.org/our-certifications/exam-701-objectives) 
-* [E701 Dokumentation](https://github.com/w901-fr19-mi/E701)
-* [myE701 Original Repository](https://github.com/w901-fr19-mi/myE701) 
