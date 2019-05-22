@@ -1,4 +1,5 @@
 # ![](https://www.lpice.eu/fileadmin/_processed_/csm_LPIC-DevOpsToolsEngineer_43de3c4735.jpg) myE701 - Exam 701: DevOps Tools Engineer 
+***
 
 Beispiel für einen Aufbau einer Dokumention des Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapiteln aus dem LPI E701 Exam
 
@@ -21,7 +22,6 @@ Beispiel für einen Aufbau einer Dokumention des Lern- und Entwicklungsprozesses
 <details>
 <summary>Fahrplan</summary>
 <br>
-***
 
 | Datum | behandelte Unterrichtsinhalte: | Gewichtung |
 | -------- | ------ | -------- |
@@ -37,8 +37,10 @@ Beispiel für einen Aufbau einer Dokumention des Lern- und Entwicklungsprozesses
 
 </details>
 
-## Dokumention des Lern- und Entwicklungsprozesses
-***
+
+<details>
+<summary>Dokumentation des Lern- und Entwicklungsprozesses</summary>
+<br>
 
 ### Kapitel: 702.1 Container Usage (Status: In Arbeit)
 
@@ -59,3 +61,5 @@ Beispiel für einen Aufbau einer Dokumention des Lern- und Entwicklungsprozesses
 | Unix Prozesse  | run/start/stop      | docker run/start/stop Befehle ähneln dem .... Subsystem |
 
 **Fazit und Aussicht**, z.B. Die Durcharbeitung von ... gab mir ein besseres Verständnis über die Funktionsweise von Containern.
+
+</details>
