@@ -53,12 +53,16 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 # Kubernetes Cluster
 **Einrichten der Kubernetes Umgebung mit einem Master und zwei Worker Servern auf einem ESXi Host**
 
-## Step 1 - Kubeadm installation (On all VMs)
+## Step 1 - Kubeadm installation
+Betroffene VMs<br>
+
+    s801-k8sm-01 <- Master
+    s802-kwrk-01 <- Worker 1
+    s803-kwrk-02 <- Worker 2
 
 ### VM Setup
 Zuerst müssen drei VMs erstellt und mit Ubuntu Server 18.04.02 LTS konfiguriert bzw. installiert werden.<br>
 Nachdem die VMs erstellt, geupdatet und mit den richtigen Hostnames & IP-Adressen konfiguriert wurde, muss noch das Hostsfile angepasst werden.<br>
-
 
     sudo nano /etc/hosts
 
@@ -103,6 +107,34 @@ Sobald die Konfigurationdatei offen ist, die zuvor gefundenen SWAP Partition mit
     sudo init 6
 
 ### Kubeadm packete installieren
+
+Dependencies installieren<br>
+
+    sudo apt install -y apt-transport-https
+
+Kubernetes Key hinzufügen<br>
+
+    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
+Kubernetes Repository hinzufügen.<br>
+
+    cd /etc/apt/
+    sudo nano sources.list.d/kubernetes.list
+
+Kuberentes Repository in die zuvor erstellte Liste einfügen.<br>
+
+    deb http://apt.kubernetes.io/ kubernetes-xenial main
+
+Repositories Updaten und "kubeadm", "kubelet" und "kubectl" installieren.<br>
+
+    sudo apt update
+    sudo apt install -y kubeadm kubelet kubectl
+
+## Step 2 - Kubernetes Cluster initialisieren
+Betroffene VMs:<br>
+
+    s801-k8sm-01 <- Master
+
 
 
 
