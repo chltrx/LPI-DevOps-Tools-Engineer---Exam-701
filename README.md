@@ -47,6 +47,17 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 <br>
 
 <details>
+<summary>Prerequisites</summary>
+<br>
+
+## Kubernetes Cluster
+**Einrichten der Kubernetes Umgebung mit einem Master und zwei Worker Servern auf einem ESXi Host**
+
+lelek
+
+</details>
+
+<details>
 <summary>LPI DevOps Tools Engineer - Exam 701</summary>
 <br>
 
