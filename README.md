@@ -74,6 +74,21 @@ Schlussendlich muss bzw. kann man die Konfiguration auf allen drei Server mit fo
 
 Alle drei VMs sollten nun die Hostnamen zur IP-Adresse auflösen können. 
 
+### Docker installation
+
+Mit folgendem Befehl Docker auf dem Master Server installieren. Diese Docker Version ist die bereits compilierte vom Ubuntu Repository<br>
+
+    sudo apt install docker.io -y
+
+Danach muss man noch den Docker Service aktivieren und einstellen, dass er bei jedem Systemstart mit startet.<br>
+
+    sudo systemctl start docker
+    sudo systemctl enable docker
+
+### SWAP deaktivieren
+
+
+
 </details>
 
 <details>
