@@ -87,7 +87,18 @@ Danach muss man noch den Docker Service aktivieren und einstellen, dass er bei j
 
 ### SWAP deaktivieren
 
+SWAP Partition finden und temporär deaktivieren.<br>
 
+    sudo swapon -s
+    sudo swapoff -a
+
+SWAP permanent deaktivieren.<br>
+
+    sudo nano /etc/fstab
+
+Sobald die Konfigurationdatei offen ist, die zuvor gefundenen SWAP Partition mit einem # auskommentieren die, die Konfigurationdatei wieder abspeichern und die VM neustarten.
+
+    sudo init 6
 
 </details>
 
