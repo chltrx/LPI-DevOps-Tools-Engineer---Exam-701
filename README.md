@@ -53,7 +53,18 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 ## Kubernetes Cluster
 **Einrichten der Kubernetes Umgebung mit einem Master und zwei Worker Servern auf einem ESXi Host**
 
-lelek
+### VM Setup
+Zuerst müssen drei VMs erstellt und mit Ubuntu Server 18.04.02 LTS konfiguriert bzw. installiert werden.<br>
+Nachdem die VMs erstellt, geupdatet und mit den richtigen Hostnames & IP-Adressen konfiguriert wurde, muss noch das Hostsfile angepasst werden.<br>
+
+
+    sudo nano /etc/hosts
+
+Folgende konfiguration muss bei allen drei Servern ins Hostfile geschrieben werden.
+
+    10.10.5.100 s801-k8sm-01
+    10.10.5.110 s802-kwrk-01
+    10.10.5.111 s803-kwrk-02
 
 </details>
 
