@@ -53,7 +53,7 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 ## Kubernetes Cluster
 **Einrichten der Kubernetes Umgebung mit einem Master und zwei Worker Servern auf einem ESXi Host**
 
-### VM Setup
+### VM Setup (All VMs)
 Zuerst müssen drei VMs erstellt und mit Ubuntu Server 18.04.02 LTS konfiguriert bzw. installiert werden.<br>
 Nachdem die VMs erstellt, geupdatet und mit den richtigen Hostnames & IP-Adressen konfiguriert wurde, muss noch das Hostsfile angepasst werden.<br>
 
@@ -74,9 +74,9 @@ Schlussendlich muss bzw. kann man die Konfiguration auf allen drei Server mit fo
 
 Alle drei VMs sollten nun die Hostnamen zur IP-Adresse auflösen können. 
 
-### Docker installation
+### Docker installation (All VMs)
 
-Mit folgendem Befehl Docker auf dem Master Server installieren. Diese Docker Version ist die bereits compilierte vom Ubuntu Repository<br>
+Mit folgendem Befehl Docker auf den drei VMs installieren. Diese Docker Version ist die bereits compilierte vom Ubuntu Repository<br>
 
     sudo apt install docker.io -y
 
@@ -85,7 +85,7 @@ Danach muss man noch den Docker Service aktivieren und einstellen, dass er bei j
     sudo systemctl start docker
     sudo systemctl enable docker
 
-### SWAP deaktivieren
+### SWAP deaktivieren (All VMs)
 
 SWAP Partition finden und temporär deaktivieren.<br>
 
@@ -96,9 +96,13 @@ SWAP permanent deaktivieren.<br>
 
     sudo nano /etc/fstab
 
-Sobald die Konfigurationdatei offen ist, die zuvor gefundenen SWAP Partition mit einem # auskommentieren die, die Konfigurationdatei wieder abspeichern und die VM neustarten.
+Sobald die Konfigurationdatei offen ist, die zuvor gefundenen SWAP Partition mit einem # auskommentieren, die Konfigurationdatei wieder abspeichern und die VM neustarten.
 
     sudo init 6
+
+### Kubeadm installation (All VMs)
+
+
 
 </details>
 
