@@ -66,6 +66,14 @@ Folgende konfiguration muss bei allen drei Servern ins Hostfile geschrieben werd
     10.10.5.110 s802-kwrk-01
     10.10.5.111 s803-kwrk-02
 
+Schlussendlich muss bzw. kann man die Konfiguration auf allen drei Server mit folgenden Befehlen überprüfen.
+
+    ping -c 3 s801-k8sm-01
+    ping -c 3 s802-kwrk-01
+    ping -c 3 s803-kwrk-02
+
+Alle drei VMs sollten nun die Hostnamen zur IP-Adresse auflösen können. 
+
 </details>
 
 <details>
