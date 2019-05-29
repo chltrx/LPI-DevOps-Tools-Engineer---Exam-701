@@ -50,10 +50,12 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 <summary>Prerequisites</summary>
 <br>
 
-## Kubernetes Cluster
+# Kubernetes Cluster
 **Einrichten der Kubernetes Umgebung mit einem Master und zwei Worker Servern auf einem ESXi Host**
 
-### VM Setup (All VMs)
+## Step 1 - Kubeadm installation (On all VMs)
+
+### VM Setup
 Zuerst müssen drei VMs erstellt und mit Ubuntu Server 18.04.02 LTS konfiguriert bzw. installiert werden.<br>
 Nachdem die VMs erstellt, geupdatet und mit den richtigen Hostnames & IP-Adressen konfiguriert wurde, muss noch das Hostsfile angepasst werden.<br>
 
@@ -74,7 +76,7 @@ Schlussendlich muss bzw. kann man die Konfiguration auf allen drei Server mit fo
 
 Alle drei VMs sollten nun die Hostnamen zur IP-Adresse auflösen können. 
 
-### Docker installation (All VMs)
+### Docker installation
 
 Mit folgendem Befehl Docker auf den drei VMs installieren. Diese Docker Version ist die bereits compilierte vom Ubuntu Repository<br>
 
@@ -85,7 +87,7 @@ Danach muss man noch den Docker Service aktivieren und einstellen, dass er bei j
     sudo systemctl start docker
     sudo systemctl enable docker
 
-### SWAP deaktivieren (All VMs)
+### SWAP deaktivieren
 
 SWAP Partition finden und temporär deaktivieren.<br>
 
@@ -100,7 +102,7 @@ Sobald die Konfigurationdatei offen ist, die zuvor gefundenen SWAP Partition mit
 
     sudo init 6
 
-### Kubeadm installation (All VMs)
+### Kubeadm packete installieren
 
 
 
@@ -110,7 +112,7 @@ Sobald die Konfigurationdatei offen ist, die zuvor gefundenen SWAP Partition mit
 <summary>LPI DevOps Tools Engineer - Exam 701</summary>
 <br>
 
-## Kapitel: 702.1 Container Usage (Status: In Arbeit)
+# Kapitel: 702.1 Container Usage (Status: In Arbeit)
 
 **Weight**: 7 (7)
 
