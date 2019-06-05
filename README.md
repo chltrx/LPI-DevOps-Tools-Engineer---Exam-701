@@ -181,6 +181,28 @@ Betroffene VMs<br>
 
     kubectl get nodes
 
+# Kubernetes Dashboard UI
+**Installieren des Kubernetes Dashboard UIs um die Container via Web-Interface zu verwalten.**
+
+## Step 1 - Dashboard UI installation
+Betroffene VMs<br>
+
+    s801-k8sm-01 <- Master
+
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploay/recommended/kubernetes-dashboard.yaml
+
+## Activate Dashboard UI
+
+    kubectl proxy
+
+## Access Dashboard UI
+
+    http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+
+### Note
+
+The UI can only be accessed from the machine where the command is executed. See kubectl proxy --help for more options.
+
 </details>
 
 <details>
