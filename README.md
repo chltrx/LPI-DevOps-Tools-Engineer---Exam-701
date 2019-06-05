@@ -183,11 +183,11 @@ Betroffene VMs<br>
 
 # Kubernetes Dashboard UI
 **Installieren des Kubernetes Dashboard UIs um die Container via Web-Interface zu verwalten.**
-
-## Step 1 - Dashboard UI installation
 Betroffene VMs<br>
 
     s801-k8sm-01 <- Master
+
+##Dashboard UI installation
 
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploay/recommended/kubernetes-dashboard.yaml
 
