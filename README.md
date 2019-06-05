@@ -134,9 +134,52 @@ Repositories Updaten und "kubeadm", "kubelet" und "kubectl" installieren.<br>
 Betroffene VMs:<br>
 
     s801-k8sm-01 <- Master
+### Cluster initialisieren
 
+    sudo kubeadm init --pod-network-cidr=10.13.37.0/24 --apiserver-advertise-address=10.10.5.100 --kubernetes-version "1.14.2"
 
+Den kubeadm join Command kopieren, dieser wird später benötigt um die Worker ins Cluster ein zu binden.<br>
 
+#### Note
+
+| Parameter          | Description      |
+| -------------- | -------------- |
+| --apiserver-advertise-address     | Determines which IP address Kubernetes should advertise its API server on. |
+| --pod-network-cidr        | Specify the range of IP addresses for the pod network. We're using the 'flannel' virtual network. If you want to use another pod network such as weave-net or calico, change the range IP address.         |
+
+### Create .kube Configuration
+
+    mkdir -p $HOME/.kube
+    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+### Deploy flannel network
+
+    kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+### Check kubernetes node & pads
+
+    kubectl get nodes
+    kubectl get pods --all-namespaces
+
+## Step 3 - Adding Worker Nodes to the Kubernetes Cluster
+Betroffene VMs<br>
+
+    s802-kwrk-01 <- Worker 1
+    s803-kwrk-02 <- Worker 2
+
+### Join Worker 1 & 2
+
+    kubeadm join 10.10.5.100:6443 --token p63z79.ihri5v5hdskjbhdj --discovery-token-ca-cert-hash sha256:11d78c9595bdbe95995517d96ce17b93adc1681e2086483a760a9d99f16f2edd
+
+### Test
+Betroffene VMs<br>
+
+    s801-k8sm-01 <- Master
+
+#### Testen ob die Worker erfolgreich gejoint wurden
+
+    kubectl get nodes
 
 </details>
 
