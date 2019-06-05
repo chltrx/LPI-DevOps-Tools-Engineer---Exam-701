@@ -187,7 +187,7 @@ Betroffene VMs<br>
 
     s801-k8sm-01 <- Master
 
-##Dashboard UI installation
+## Dashboard UI installation
 
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploay/recommended/kubernetes-dashboard.yaml
 
