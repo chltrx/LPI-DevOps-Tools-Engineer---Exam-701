@@ -209,15 +209,95 @@ The UI can only be accessed from the machine where the command is executed. See 
 <summary>LPI DevOps Tools Engineer - Exam 701</summary>
 <br>
 
+# Kapitel: 701.1 Modern Software Development (Status: In Arbeit)
+
+**Weight**: 6 + 4 Bonsupunkte für die Erstellung eines Microservices inkl Unit-Tests.
+
+**Beschreibung**, Gegenüberstellung wie ein Microservice:
+* Data persistence
+* Sessions
+* Status information
+* Transactions
+* Concurrency
+* Security
+* Performance
+* Availablility
+* Scaling
+* Load balancing
+* essaging
+* Monitoring
+* APIs
+handhabt.
+
+**Tagesziele**, Aufstellung der oben genannten Stichworte. 
+
+**Vorgehen**, Informationen über die oben gennanten Stichworte sammeln, den bezug zu Microservices herausfinden und schlussendlich in einer Aufstellung beschreiben.
+
+**Beispiele und Arbeitsergebnisse**
+
+TextTextText
+
+**Fazit und Aussicht**, Die Durcharbeitung von 701.1 Modern Software Development gab mir ein besseres Verständnis darüber wie ein Microservices verschiedene Aufgaben handhabt und verwendet.
+
+***
+
+# Kapitel: 701.2 Standard Components and Latforms for Software (Status: In Arbeit)
+
+**Weight**: 2 + 6 Bonuspunkte für die Kombination des Microservices, aus Topic 701.1, mit einer NoSQL Datenbank.
+
+**Beschreibung** Aufstellung von Features und Konzepten von:
+* Object storage
+* Relational and NoSQL databases
+* Message brokers and message queues
+* Big data services
+* Application runtimes / PaaS
+* Content delivery networks
+
+**Tagesziele**, Aufstellung der oben genannten Features und Konzepten.
+
+**Vorgehen**, Informationen über die oben gennanten Features und Konzepte sammeln und in einer Aufstellung beschreiben.
+
+**Beispiele und Arbeitsergebnisse**
+
+TextTextText
+
+**Fazit und Aussicht**, Die Durcharbeitung von 701.2 Standard Components and Platforms for Software gab mir ein besseres Verständnis darüber was für Features und Konzepte von einzelnen "Diensten" für Cloud Platformen verwendet werden.
+
+***
+
+# Kapitel: 701.3 Source Code Management (Status: In Arbeit)
+
+**Weight**: 5
+
+**Beschreibung** Aufstellung von Features und Eigenschaften von Git:
+* Git conecpts and repository structure
+* Manage files within a Git repostitory
+* Manage branches and tags
+* Work with remote repositories and branhes as well as submodules
+* Merge files and branches
+* Awareness of SVN and CVS, including concepts of centralized an distributed SCM solutions
+
+**Tagesziele**, Aufstellung der oben genannten Features und Eingenschaften von Git.
+
+**Vorgehen**, Informationen über die oben gennanten Features und Eigenschaften von Git sammeln und in einer Aufstellung beschreiben.
+
+**Beispiele und Arbeitsergebnisse**
+
+TextTextText
+
+**Fazit und Aussicht**, Die Durcharbeitung von 701.3 Source Code Management gab mir ein besseres Verständnis darüber was für Features und Eigenschaften Git hat, wie Git diese verwendet und wie man sie selber anwenden.
+
+***
+
 # Kapitel: 702.1 Container Usage (Status: In Arbeit)
 
-**Weight**: 7 (7)
+**Weight**: 7 (nur wer das Modul M300 nicht besucht hat + 7 Bonuspunkte). Es wird ein Beschrieb Linux Technologien und Container erwartet.
 
 **Beschreibung** Gegenüberstellung welche Linux Technologien für Container verwendet werden.
 
-**Tagesziele**, z.B. Erstellung einer Tabelle Linux - Container. 
+**Tagesziele**, Erstellung einer Tabelle Linux - Container. 
 
-**Vorgehen**, z.B. Studieren Background Linux Namespaces vs. Container, UnionFS vs. Container Layer, Unix Prozesse (Jobs) vs. Docker run/start/stop
+**Vorgehen**, Studieren Background Linux Namespaces vs. Container, UnionFS vs. Container Layer, Unix Prozesse (Jobs) vs. Docker run/start/stop
 
 **Beispiele und Arbeitsergebnisse**
 
@@ -227,7 +307,33 @@ The UI can only be accessed from the machine where the command is executed. See 
 | UnionFS        | Image Layer         | Container Verwenden UnionFileSysteme um .... |
 | Unix Prozesse  | run/start/stop      | docker run/start/stop Befehle ähneln dem .... Subsystem |
 
-**Fazit und Aussicht**, z.B. Die Durcharbeitung von ... gab mir ein besseres Verständnis über die Funktionsweise von Containern.
+**Fazit und Aussicht**, Die Durcharbeitung von 702.1 Container Management gab mir ein besseres Verständnis über die Funktionsweise von Containern.
+
+***
+
+# Kapitel: 702.2 Container Deployment and Orchestration (Status: In Arbeit)
+
+**Weight**: 5
+
+**Beschreibung** Aufstellung von Cluster Features und Eigenschaften für Docker/Kubernetes:
+* Understand the architecture and application model Kubernetes
+* Definition of Deployments
+* Definition of Services
+* Definition of ReplicaSets
+* Definition of Pods
+* docker-compose
+* docker
+* kubectl
+
+**Tagesziele**, Aufstellung der oben genannten Features und Eingenschaften von Git.
+
+**Vorgehen**, Informationen über die oben gennanten Features und Eigenschaften von Git sammeln und in einer Aufstellung beschreiben.
+
+**Beispiele und Arbeitsergebnisse**
+
+TextTextText
+
+**Fazit und Aussicht**, Die Durcharbeitung von 701.3 Source Code Management gab mir ein besseres Verständnis darüber was für Features und Eigenschaften Git hat, wie Git diese verwendet und wie man sie selber anwenden.
 
 ***
 
