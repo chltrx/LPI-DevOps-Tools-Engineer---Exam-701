@@ -28,11 +28,11 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 
 | Datum | behandelte Unterrichtsinhalte: | Gewichtung |
 | -------- | ------ | -------- |
-| 15.05.19 | Installation SW, Einrichten Linux VM(s)<br>[701.1 Modern Software Development, 1. Teil](https://github.com/w901-fr19-mi/E701#7011-modern-software-development) | 6 |
-| 22.05.19 | [701.1 Modern Software Development, 2. Teil](https://github.com/w901-fr19-mi/E701#7011-modern-software-development) | 4 |
-| 29.05.19 | [701.3 Source Code Management](https://github.com/w901-fr19-mi/E701#7013-source-code-management) | 5 | 
-| 05.06.19 | 702.1 Container Usage, 1. Teil | 7 |
-| 12.06.19 | 702.1 Container Usage, 2. Teil | (7) |
+| 15.05.19 | 701.1 Modern Software Development | 6 |
+| 22.05.19 | 701.2 Standard Components and Platforms for Software | 2 |
+| 29.05.19 | Kubernetes Cluster installieren & konfigurieren | - | 
+| 05.06.19 | 701.3 Source Code Management | 5 |
+| 12.06.19 | 702.1 Container Usage | 7 |
 | 19.06.19 | 702.2 Container Deployment and Orchestration | 5 |
 | 26.06.19 | LB1 Theoretische Prüfung und Abschluss LB2 | - |
 | 03.07.19 | Sommersporttage | - |
@@ -241,7 +241,7 @@ TextTextText
 
 ***
 
-# Kapitel: 701.2 Standard Components and Latforms for Software (Status: In Arbeit)
+# Kapitel: 701.2 Standard Components and Platforms for Software (Status: In Arbeit)
 
 **Weight**: 2 + 6 Bonuspunkte für die Kombination des Microservices, aus Topic 701.1, mit einer NoSQL Datenbank.
 
