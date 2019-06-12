@@ -30,13 +30,13 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 | -------- | ------ | -------- |
 | 15.05.19 | 701.1 Modern Software Development | 6 |
 | 22.05.19 | 701.2 Standard Components and Platforms for Software | 2 |
-| 29.05.19 | Kubernetes Cluster installieren & konfigurieren | - | 
+| 29.05.19 | Kubernetes Cluster installieren & konfigurieren | 14 | 
 | 05.06.19 | 701.3 Source Code Management | 5 |
 | 12.06.19 | 702.1 Container Usage | 7 |
 | 19.06.19 | 702.2 Container Deployment and Orchestration | 5 |
 | 26.06.19 | LB1 Theoretische Prüfung und Abschluss LB2 | - |
 | 03.07.19 | Sommersporttage | - |
-|          | Total Punkte | 25
+|          | Total Punkte | 39
 
 <br>
 </details>
@@ -51,7 +51,16 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 <br>
 
 # Kubernetes Cluster
-**Einrichten der Kubernetes Umgebung mit einem Master und zwei Worker Servern auf einem ESXi Host**
+
+**Weight**: 14 
+
+**Beschreibung**, Einrichten der Kubernetes Umgebung mit einem Master und zwei Worker Servern auf einem ESXi Host
+
+**Tagesziele**, Laufende Kubernetes Umgebung mit einem Master und zwei Worker Servern.
+
+**Vorgehen**, Informationen über Kubernetes und Kubernetes Cluster unter Linux bzw. Ubuntu suchen. Verschiedene Anleitungen studieren und schlussendlich das Kubernetes Cluster aufbauen.
+
+**Beispiele und Arbeitsergebnisse**
 
 ## Step 1 - Kubeadm installation
 Betroffene VMs<br>
@@ -203,6 +212,8 @@ Betroffene VMs<br>
 
 The UI can only be accessed from the machine where the command is executed. See kubectl proxy --help for more options.
 
+**Fazit und Aussicht**, Die erstellung des Kubernetes Clusters gab mir ein besseres Verständnis darüber wie die Infrastruktur hinter einem Cluster funktioniert, wie die einzelnen Server bzw. Master und Worker kommunizieren und wie das ganze aufgesetzt/erstellt werden kann.
+
 </details>
 
 <details>
@@ -213,7 +224,7 @@ The UI can only be accessed from the machine where the command is executed. See 
 
 **Weight**: 6 + 4 Bonsupunkte für die Erstellung eines Microservices inkl Unit-Tests.
 
-**Beschreibung**, Gegenüberstellung wie ein Microservice:
+**Beschreibung**, Gegenüberstellung wie ein Microservice ... handhabt:
 * Data persistence
 * Sessions
 * Status information
@@ -227,7 +238,6 @@ The UI can only be accessed from the machine where the command is executed. See 
 * essaging
 * Monitoring
 * APIs
-handhabt.
 
 **Tagesziele**, Aufstellung der oben genannten Stichworte. 
 
