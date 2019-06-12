@@ -47,7 +47,7 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 <br>
 
 <details>
-<summary>Prerequisites</summary>
+<summary>Kubernetes Cluster installieren & konfigurieren</summary>
 <br>
 
 # Kubernetes Cluster
