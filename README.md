@@ -394,8 +394,48 @@ Beim clientseitigen Lastausgleich wird ein Algorithmus wie Round-Robin oder zone
 Ein weiterer Vorteil ist, dass Sie den Load-Balancing-Algorithmus programmgesteuert steuern können, da sich der Load-Balancer auf der Clientseite befindet. Ribbon bietet diese Möglichkeit, daher werden wir Ribbon für den clientseitigen Lastenausgleich verwenden.
 
 
-### Messaging
+## Messaging
+Beim Übergang von einer monolithischen Anwendungsstruktur zu einer multi-unabhängigen Struktur stellen Sie sofort fest, dass das Aufrufen anderer Komponenten nicht auf ein System mit nur einem Prozess ausgerichtet ist. Innerhalb eines Single-Process-Systems rufen Sie normalerweise Komponenten mit verschiedenen Sprachmethoden oder über Dependency Injection auf, wie wir es bei Angular sehen. Da eine microservices-basierte Anwendung auf einer Vielzahl von Servern, Hosts und Prozessen ausgeführt werden kann, ist die Kommunikation auf HTTP (Hyper Text Transfer Protocol), TCP (Transmission Control Protocol) und AMQP (Advanced Message Queuing Protocol) ausgerichtet. Alle diese Protokolle sind für die IPC- oder Interprozesskommunikation konzipiert, da sie gemeinsam genutzte Daten verwalten. <br>
 
+* Synchronous protocol
+* Asynchronous protocol
+* Single receiver
+* Multiple receivers
+
+### Synchronous Protocol
+Synchronous Protocol ist in Chat-Funktionen, HTTP, Instant Messaging und Live-Funktionen integriert ist. Es handelt sich um eine Datenübertragung, die in regelmäßigen Abständen stattfindet und in der Regel von der Taktung des Mikroprozessors abhängt, da zwischen Sender und Empfänger ein Taktsignal bestehen muss. Es ist so zu sagen ein Protokoll, dass eine Primär- / Replikatkonfiguration erfordert, da ein Gerät die Kontrolle über ein anderes Gerät hat, um die Synchronität sicherzustellen.
+
+### Asynchronous Portocol
+Das Gegenteil von synchronem, asynchronem Protokoll arbeitet außerhalb der Beschränkungen eines Taktsignals und tritt zu jeder Zeit und in unregelmäßigen Intervallen auf. Wie oben erwähnt, ist das synchrone Protokoll mikroprozessorabhängig, was bedeutet, dass diese Protokolle häufig für die in einem Computer ablaufenden Prozesse verwendet werden. Bei asynchronen Prozessen sind sie aufgrund der fehlenden Abhängigkeit für Cloud-Umgebungen und Betriebssysteme weit verbreitet. Nach dem Senden von Informationen muss nicht auf eine Antwort des Empfängers gewartet werden.
+
+### Single Receiver
+Im Namen implizit bedeutet eine einzelne Empfängereinrichtung, dass jede Anforderung von einem Empfänger verarbeitet werden muss. Bei der Datenübertragung müssen Anforderungen daher gestaffelt sein, um empfangen zu werden, da sie nicht gleichzeitig empfangen werden können.
+
+### Multiple Receivers
+Mehrere Empfänger können mehrere Anforderungen verarbeiten, da jede Anforderung von null bis zu mehreren Empfängern verarbeitet werden kann. Beispielsweise werden in der Regel mehrere Empfänger in einem Saga-Muster verwendet, da es asynchron sein und gleichzeitig die Datenkonsistenz fördern muss.
+
+
+## Monitoring
+Anwendungen, die unter Verwendung der Mikroservice-Architektur entwickelt wurden, müssen aus denselben Gründen überwacht werden wie alle anderen Arten von verteilten Systemen: Das heißt, alle Systeme fallen schließlich aus.
+
+* Überwachung von Containern und deren Inhalt
+* Warungen zur Servicleistung, nicht zur Containerleistung
+* Überwachung von Diensten welche felxibel und standortübergreifend sind
+* Überwachung der APIs
+* Überwachung über APIs
+
+## APIs
+API steht für Application Programming Interface, wobei das Schlüsselwort interface ist . APIs sind sozusagen die Türen , durch die Entwickler mit einer Anwendung interagieren können.
+APIs gibt es seit den Anfängen des Computerbetriebs , die es Computern ermöglichen, Wiederholungsfunktionen aufzurufen, um das Aufblähen von Anwendungen zu verringern. Bei der Erörterung von APIs in der heutigen digitalen Wirtschaft geht es jedoch in der Regel um Web-APIs , die die B2B-Kommunikation erleichtern.
+Allgemein gesagt, ermöglichen APIs Entwicklern, intern und extern eines von zwei Dingen auszuführen: Zugriff auf die Daten einer Anwendung oder Verwendung der Funktionen einer Anwendung . Letztendlich sind auf diese Weise die Elektronik, Anwendungen und Webseiten der Welt miteinander verbunden, um miteinander zu kommunizieren und zusammenzuarbeiten.
+
+### Unterschiede zwischen APIs und Microservices¨
+Microservice sind eine Architektur für Web - Anwendungen, bei denen die Funktionalität bis aufgeteilt in kleinem Web - Service.<br>
+
+wohingegen<br>
+
+APIs sind die Frameworks, über die Entwickler mit einer Webanwendung interagieren können.<br>
+Der Reiz der APIs ist zweifach für die meisten Unternehmen, da APIs oft das Medium der Kommunikation zwischen Microservices sind, sondern auch , weil sie auch verwendet werden , kann eine Anwendung die Daten und Funktionalität an Dritte zu entlarven, was den Weg für leistungsstarke Integrationen.
 
 
 **Fazit und Aussicht**, Die Durcharbeitung von 701.1 Modern Software Development gab mir ein besseres Verständnis darüber wie ein Microservices verschiedene Aufgaben handhabt und verwendet.
