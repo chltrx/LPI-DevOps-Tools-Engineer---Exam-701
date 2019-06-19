@@ -286,7 +286,45 @@ Bedeutet, dass jede Instanz alle Sitzungsdaten speichert und über das Netzwerk 
 Bedeutet, dass beim Zugriff eines Benutzers auf einen Mikrodienst Benutzerdaten aus dem gemeinsamen Sitzungsspeicher abgerufen werden können, um sicherzustellen, dass alle Mikrodienste dieselben Sitzungsdaten lesen können. In einigen Szenarien ist dieses Schema sehr gut und der Anmeldestatus des Benutzers ist undurchsichtig. Es ist auch eine hochverfügbare und skalierbare Lösung. Der Nachteil dieser Lösung ist jedoch, dass der gemeinsame Sitzungsspeicher einen bestimmten Schutzmechanismus erfordert und daher auf sichere Weise zugänglich sein muss.
 
 
-## Status information
+## Status information / Monitoring
+### Application Metrics
+Diese Metriken beziehen sich speziell auf Ihre Anwendung. Wenn Ihre Anwendung Benutzerregistrierungen akzeptiert, kann eine Standardmetrik sein, wie viele in der letzten Stunde erfolgreich abgeschlossen wurden. Ein Steuervorbereitungssystem kann kontextspezifische Ereignisse wie die Formularvalidierung aufzeichnen. Diese Daten auf oberster Ebene sind für Entwicklungsteams und die Organisation hilfreich, um das Funktionsverhalten des Systems zu verstehen. Wenn die Validierung von Formularen mit maximalem Volumen in der Regel 1.000 Mal pro Stunde erfolgt und dieser Durchsatz in den letzten zwei Stunden plötzlich auf 500 sinkt, kann diese Anomalie ein Hinweis auf ein Problem sein.
+
+### Platform Metircs
+Diese Metriken geben Aufschluss über die Hauptmerkmale Ihrer Infrastruktur. Beispiele beinhalten:
+Die durchschnittliche Gesamtausführungszeit für jede der zehn am häufigsten ausgeführten Datenbankabfragen.
+Die durchschnittliche Ausführungszeit der schnellsten 10 Prozent;
+Die durchschnittliche Ausführungszeit der langsamsten 10 Prozent.
+Die Anzahl der Anfragen pro Minute, die ein Dienst erhält.
+Die durchschnittliche Antwortzeit für jeden Service-Endpunkt.
+Das Erfolgs / Fehler-Verhältnis für jeden Dienst.
+Zusammen bieten diese Metriken ein Dashboard, mit dem die Leistung und das Verhalten von Systemen auf niedriger Ebene erfasst werden können. Im Idealfall werden Sie durch diese Metriken auf Leistungseinbußen aufmerksam gemacht, die sich wahrscheinlich auf den Gesamtdurchsatz auswirken oder zu einem systemweiten Ausfall führen. Es ist wichtig, Low-Level-Daten auf diese Weise zu verwenden, um größere Fehler vorherzusagen und zu verhindern, bevor sie auftreten.
+Die Raygun APM-Plattform bietet ein Dashboard, mit dem diese und andere Arten von Metriken in Bezug auf die Gesamtsystemleistung visualisiert werden können.
+
+### System Events
+Äußere Kräfte wirken ständig auf Systeme. Am häufigsten und möglicherweise am störendsten sind neue Bereitstellungen. Das Betriebspersonal weiß, dass eine starke Korrelation zwischen neuen Code-Bereitstellungen und Systemfehlern besteht. Angesichts dieser Realität ist es sinnvoll, ein Protokoll dieser Bereitstellungen in die Zeitreihendaten aufzunehmen, die von den Anwendungen zusammen mit den übrigen Metriken aufgezeichnet werden. Skalierungsereignisse, Konfigurationsaktualisierungen und andere betriebliche Änderungen sind ebenfalls relevant und sollten aufgezeichnet werden. Das Aufzeichnen dieser Ereignisse ermöglicht es auch, sie mit dem Systemverhalten zu korrelieren.
+
+### Überwachungs-Tools
+**Raygun APM** : Die APM-Plattform von Raygun ist ein weiteres Beispiel für ein komplettes System, das sowohl Instrumentierungs- als auch Erfassungsprozesse sowie ein Dashboard zur Visualisierung von Messdaten bietet. Raygun APM unterstützt .NET. Java- und Ruby-Unterstützung sind in Entwicklung.<br>
+
+**Zipkin** : Zipkin ist ein Open-Source-Verfolgungssystem, das speziell für die Verfolgung von Anrufen zwischen Mikrodiensten entwickelt wurde. Es ist besonders nützlich für die Analyse von Latenzproblemen. Zipkin enthält sowohl Instrumentenbibliotheken als auch die Collector-Prozesse, die Ablaufverfolgungsdaten erfassen und speichern.<br>
+
+**Apache Kafka** : Kafka ist ein Streams-Verarbeitungssystem. Es verwendet eine Publish / Subscribe-Methode zum Lesen und Schreiben von Daten in einen logischen Stream, dessen Konzept einem Messaging-System wie RabbitMQ ähnelt. Kafka kann mit anderen Tools wie Zipkin kombiniert werden, um eine robuste Lösung für die Übertragung und Speicherung von Messdaten bereitzustellen.<br>
+
+**Grafana** : Die mit all diesen Tools gesammelten Daten sind nur dann sehr nützlich, wenn sie interpretiert und analysiert werden können. Zu diesem Zweck ist Grafana ein webbasiertes Visualisierungstool, mit dem visuelle Dashboards erstellt werden.<br>
+
+**Prometheus** : Prometheus ist eine Open-Source-Überwachungslösung, die ursprünglich von SoundCloud entwickelt wurde. Es wird häufig zum Speichern und Abfragen von „Zeitreihendaten“ verwendet. Hierbei handelt es sich um Daten, die Aktionen im Zeitverlauf beschreiben. Prometheus wird häufig mit anderen Tools, insbesondere Grafana, kombiniert, um die Zeitreihendaten zu visualisieren und Dashboards bereitzustellen.
+
+
+## Transactions
+Ohne Transaktionen können keine Echtzeitanwendung verwendet werden kann. Bei der Transaktion kann es sich um Geldtransfer, E-Mail-Versand, Auftragserteilung,Rechnungszahlung usw. handeln. Vereinfacht ausgedrückt, handelt es sich bei einer Transaktion um eine Arbeitseinheit, die in jeder Geschäftsanwendung ausgeführt wird, in der Daten in einem bestimmten Zustand erhalten bleiben, jedoch um jede Einheit von Die Arbeit sollte vollständig festgeschrieben oder rückgängig gemacht werden, um die Datenintegrität sicherzustellen.
+
+### Monolithic vs. Microservices
+Monolithische Anwendungen bleiben beim Umgang mit Transaktionen in erster Linie bei den ACID-Eigenschaften. Der größte Vorteil für die monolithische Anwendung im Transaktionsmanagement ist ein einziger und gemeinsamer Datenbankserver. Transaktionen können auf Datenbankebene initiiert und basierend auf dem Endergebnis der Transaktion festgeschrieben oder rückgängig gemacht werden. Diese Art des Initiierens einer Transaktion, Durchführen von Vorgängen und Beibehalten oder Nichtbeibehalten von Daten ist viel einfacher zu entwickeln. Dieser Vorteil wird jedoch zu einer ernsthaften Herausforderung bei der Ausführung von Großserienanwendungen. Eine einfache Sperre einer kritischen Tabelle kann zu katastrophalen Ergebnissen führen, z. B. zur Nichtverfügbarkeit der gesamten Anwendung.
+In den Richtlinien von Microservices wird dringend empfohlen, das Single Repository Principle (SRP) zu verwenden. Dies bedeutet, dass jeder Mikrodienst seine eigene Datenbank verwaltet und kein anderer Dienst direkt auf die Datenbank des anderen Dienstes zugreifen sollte. Es gibt keine direkte und einfache Möglichkeit, ACID-Prinzipien über mehrere Datenbanken hinweg zu verwalten. Auf diese Weise liegt die eigentliche Herausforderung für das Transaktionsmanagement in Microservices.
+
+
+## Concurrency
 
 
 
