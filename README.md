@@ -245,7 +245,50 @@ The UI can only be accessed from the machine where the command is executed. See 
 
 **Beispiele und Arbeitsergebnisse**
 
-TextTextText
+## Data persistence
+### Database Per Service
+In diesem Muster verwaltet jeder Mikrodienst seine eigenen Daten. Dies impliziert, dass kein anderer Mikrodienst direkt auf diese Daten zugreifen kann. Die Kommunikation oder der Datenaustausch kann nur über eine Reihe gut definierter APIs erfolgen.
+
+### Shared Database
+Eine gemeinsam genutzte Datenbank kann eine sinnvolle Option sein, wenn die Herausforderungen im Zusammenhang mit Database Per Service für Ihr Team zu schwierig werden.
+Dieser Ansatz versucht, die gleichen Probleme zu lösen. Dies geschieht jedoch durch einen wesentlich nachgiebigeren Ansatz, indem eine gemeinsam genutzte Datenbank verwendet wird, auf die mehrere Mikrodienste zugreifen.
+Meistens ist dies ein sichereres Muster für Entwickler, da sie in der Lage sind,auf bestehende Weise zu arbeiten. Bekannte ACID-Transaktionen werden verwendet,um die Konsistenz zu gewährleisten.
+Durch diesen Ansatz werden jedoch die meisten Vorteile von Microservices zunichte gemacht. Teamübergreifende Entwickler müssen die Schemaänderungen an Tabellen koordinieren. Es kann auch zu Laufzeitkonflikten kommen, wenn mehrere Dienste versuchen, auf dieselben Datenbankressourcen zuzugreifen.
+Insgesamt kann dieser Ansatz langfristig mehr schaden als nützen.
+
+### Saga Pattern
+Das Saga-Muster ist die Lösung für die Implementierung von Geschäftstransaktionen, die sich über mehrere Microservices erstrecken.
+Eine  Saga  ist im Grunde eine Folge lokaler Transaktionen. Für jede innerhalb einer Saga durchgeführte Transaktion veröffentlicht der Dienst, der die Transaktion durchführt, ein Ereignis. Die nachfolgende Transaktion wird basierend auf der Ausgabe der vorherigen Transaktion ausgelöst. Und wenn eine der Transaktionen in dieser Kette fehlschlägt, führt die Saga eine Reihe von Ausgleichstransaktionen aus, um die Auswirkungen aller vorherigen Transaktionen rückgängig zu machen.
+
+### API Composition
+Dieses Muster ist eine direkte Lösung für das Problem der Implementierung komplexer Abfragen in einer Microservices-Architektur.
+In diesem Muster ruft ein API Composer andere Microservices in der erforderlichen Reihenfolge auf. Nach dem Abrufen der Ergebnisse werden die Daten im Arbeitsspeicher verknüpft, bevor sie dem Verbraucher zur Verfügung gestellt werden.
+Wie offensichtlich ist der Nachteil dieses Musters die Verwendung ineffizienter speicherinterner Verknüpfungen für potenziell große Datasets.
+
+### CQRS - Command Query Responsibility Segragation
+CQRS (Command Query Responsibility Segregation) ist ein Versuch, die Probleme mit dem API Composition Pattern zu umgehen.
+Eine Anwendung überwacht Domänenereignisse von anderen Microservices und aktualisiert die Ansicht oder die Abfragedatenbank. Sie können komplexe Aggregationsabfragen aus dieser Datenbank bedienen. Sie können die Leistung optimieren und die Abfrage-Microservices entsprechend skalieren.
+Der Nachteil dabei ist eine zunehmende Komplexität. Plötzlich sollte Ihr Microservice Ereignisse verarbeiten. Dies kann zu Latenzproblemen führen, bei denen die Ansichtsdatenbank möglicherweise konsistent ist und nicht immer konsistent. Es kann auch die Codeduplizierung erhöhen.
+
+### Event Sourcing
+Die Ereignisbeschaffung versucht hauptsächlich, das Problem der atomaren Aktualisierung der Datenbank und der Veröffentlichung eines Ereignisses zu lösen.
+Bei der Ereignisbeschaffung speichern Sie den Status der Entität oder des Aggregats als Folge von Statusänderungsereignissen. Ein neues Ereignis wird jedes Mal erstellt, wenn ein Update oder eine Einfügung vorliegt. Der Ereignisspeicher wird zum Speichern der Ereignisse verwendet.
+
+
+## Sessions
+### Sticky sessions
+Dadurch wird sichergestellt, dass alle Anforderungen eines bestimmten Benutzers an denselben Server gesendet werden, der die erste Anforderung für diesen Benutzer bearbeitet hat. Auf diese Weise wird sichergestellt, dass die Sitzungsdaten für einen bestimmten Benutzer immer korrekt sind. Diese Lösung hängt jedoch vom Load Balancer ab und kann nur das horizontal erweiterte Cluster-Szenario erfüllen. Wenn der Load Balancer jedoch aus irgendeinem Grund plötzlich gezwungen wird, Benutzer auf einen anderen Server zu verschieben, gehen alle Sitzungsdaten des Benutzers verloren.
+
+### Session replication
+Bedeutet, dass jede Instanz alle Sitzungsdaten speichert und über das Netzwerk synchronisiert. Das Synchronisieren von Sitzungsdaten verursacht einen Mehraufwand für die Netzwerkbandbreite. Solange sich die Sitzungsdaten ändern, müssen die Daten mit allen anderen Computern synchronisiert werden. Je mehr Instanzen, desto mehr Netzwerkbandbreite bringt die Synchronisation.
+
+### Centralized session storage
+Bedeutet, dass beim Zugriff eines Benutzers auf einen Mikrodienst Benutzerdaten aus dem gemeinsamen Sitzungsspeicher abgerufen werden können, um sicherzustellen, dass alle Mikrodienste dieselben Sitzungsdaten lesen können. In einigen Szenarien ist dieses Schema sehr gut und der Anmeldestatus des Benutzers ist undurchsichtig. Es ist auch eine hochverfügbare und skalierbare Lösung. Der Nachteil dieser Lösung ist jedoch, dass der gemeinsame Sitzungsspeicher einen bestimmten Schutzmechanismus erfordert und daher auf sichere Weise zugänglich sein muss.
+
+
+## Status information
+
+
 
 **Fazit und Aussicht**, Die Durcharbeitung von 701.1 Modern Software Development gab mir ein besseres Verständnis darüber wie ein Microservices verschiedene Aufgaben handhabt und verwendet.
 
