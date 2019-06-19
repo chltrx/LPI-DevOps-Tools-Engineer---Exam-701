@@ -235,7 +235,7 @@ The UI can only be accessed from the machine where the command is executed. See 
 * Availablility
 * Scaling
 * Load balancing
-* essaging
+* Messaging
 * Monitoring
 * APIs
 
@@ -325,6 +325,76 @@ In den Richtlinien von Microservices wird dringend empfohlen, das Single Reposit
 
 
 ## Concurrency
+In Microservices kann eine logisch atomare Operation häufig mehrere Microservices umfassen. Sogar ein monolithisches System kann mehrere Datenbanken oder Messaging-Lösungen verwenden. Bei mehreren unabhängigen Datenspeicherungslösungen besteht das Risiko inkonsistenter Daten, wenn einer der verteilten Prozessteilnehmer ausfällt, z. B. wenn ein Kunde belastet wird, ohne eine Bestellung aufzugeben, oder der Kunde nicht benachrichtigt wird, dass die Bestellung erfolgreich war.<br>
+
+Solange wir mehrere Speicherorte für die Daten haben (die sich nicht in einer einzigen Datenbank befinden), wird die Konsistenz nicht automatisch gelöst, und die Ingenieure müssen sich beim Entwerfen des Systems um die Konsistenz kümmern. Momentan gibt es meiner Meinung nach in der Branche noch keine allgemein bekannte Lösung für die atomare Aktualisierung von Daten in mehreren verschiedenen Datenquellen - und wir sollten wahrscheinlich nicht abwarten, bis eine verfügbar ist.
+
+Ein Versuch, dieses Problem auf automatisierte und problemlose Weise zu lösen, ist das XA-Protokoll, das das Zwei-Phasen-Festschreibungsmuster (2PC) implementiert . In modernen High-Scale-Anwendungen (insbesondere in einer Cloud-Umgebung) scheint 2PC jedoch nicht so gut zu funktionieren. Um die Nachteile von 2PC zu beseitigen, müssen wir ACID gegen BASE eintauschen und uns je nach Anforderung auf unterschiedliche Weise um die Konsistenz kümmern.<br>
+
+**Saga-Muster**
+Die bekannteste Methode zur Behandlung von Konsistenzproblemen bei mehreren Mikrodiensten ist das Saga-Muster. Sie können Sagas als verteilte Koordination mehrerer Transaktionen auf Anwendungsebene behandeln. Je nach Anwendungsfall und Anforderungen optimieren Sie Ihre eigene Saga-Implementierung. Im Gegensatz dazu versucht das XA-Protokoll, alle Szenarien abzudecken. Das Saga-Muster ist auch nicht neu. Es war in der Vergangenheit bekannt und wurde in ESB- und SOA-Architekturen verwendet. Schließlich gelang der Übergang in die Welt der Mikrodienstleistungen. Jeder atomare Geschäftsvorgang, der mehrere Services umfasst, kann aus mehreren Transaktionen auf technischer Ebene bestehen. Die Schlüsselidee des Saga-Musters besteht darin, eine der einzelnen Transaktionen rückgängig machen zu können. Wie wir wissen, ist ein Rollback für bereits festgeschriebene Einzeltransaktionen nicht möglich. Dies wird jedoch durch Aufrufen einer Kompensationsaktion erreicht - durch Einführen einer "Abbrechen" -Operation.
+
+
+## Security
+### OAuth für die Benutzeridentitäts und Zugriffskontrolle
+Die überwiegende Mehrheit der Anwendungen muss ein gewisses Maß an Zugriffskontrolle und Berechtigungsverwaltung durchführen . Was Sie hier vermeiden möchten, ist das Rad neu zu erfinden. OAuth / OAuth2 ist hinsichtlich der Benutzerautorisierung praktisch der Industriestandard. Obwohl das Erstellen eines eigenen benutzerdefinierten Autorisierungsprotokolls eine Option ist, wird es von vielen Anbietern nicht empfohlen, es sei denn, Sie haben starke und sehr spezifische Gründe dafür.
+Während OAuth2  nicht perfekt ist , ist es ein weit verbreiteter Standard. Der Vorteil der Verwendung besteht darin, dass Sie sich auf Bibliotheken und Plattformen verlassen können, die Ihre Entwicklungsphase erheblich beschleunigen. Aus dem gleichen Grund haben bereits einige der größten Unternehmen und intelligentesten Ingenieure verschiedene Lösungen zur Verbesserung des Sicherheitsniveaus Ihres OAuth-basierten Autorisierungsdienstes entwickelt.
+
+### "Defence in depth" um Dienste zu priorisieren
+Es ist ein großer Fehler, wenn Sie davon ausgehen, dass eine Firewall in Ihrem Netzwerk zum Schutz Ihrer Software ausreicht. "Defence in depth" ist definiert als "ein Informationssicherungskonzept, bei dem mehrere Ebenen von Sicherheitskontrollen (Verteidigung) in einem Informationstechnologiesystem angeordnet sind."
+
+Im Klartext müssen Sie lediglich die vertraulichsten Dienste identifizieren und ihnen eine Reihe von verschiedenen Sicherheitsebenen zuweisen, damit ein potenzieller Angreifer, der eine Ihrer Sicherheitsebenen ausnutzen kann, diese noch ermitteln muss Sie haben die Möglichkeit, alle anderen Abwehrmechanismen bei Ihren kritischen Services zu überwinden.
+
+### Keine eigenen Krypto-Codes schreiben
+Im Laufe der Jahre haben viele Menschen unglaublich viel Geld, Zeit und Ressourcen in den Bau von Bibliotheken investiert, die sich mit Ver- und Entschlüsselung befassen. Wenn Sie 10 intelligente und kompetente Sicherheitsleute anheuern, sie alle in einen Raum stellen und sie bitten würden, die bestmögliche Bibliothek für die Ver- und Entschlüsselung zu entwickeln, würden sie zweifellos so gut sein wie die besten Open-Source-Kryptobibliotheken, die es gibt sind schon da draußen.
+Wenn es um Sicherheit geht, sollten Sie die meiste Zeit nicht versuchen, Ihre eigenen neuen Lösungen und Algorithmen zu entwickeln, es sei denn, Sie haben starke und spezifische Gründe dafür und Sie haben Leute, die qualifiziert genug sind, um etwas zu schaffen, das beinahe so gut ist wie das Open-Source-Tools sind bereits verfügbar (Tools, die von der Community intensiv getestet wurden).
+In den meisten Fällen sollten Sie  NaCl / libsodium  zur Verschlüsselung verwenden. Es gibt es schon seit mehreren Jahren und es ist schnell, einfach zu bedienen und sicher. Die ursprüngliche Implementierung von NaCl ist in C geschrieben , unterstützt aber auch C ++ und Python . Und dank der libsodium-Fork sind verschiedene Adapter für andere Sprachen wie PHP , Javascript und Go  verfügbar.
+
+### Automatische Sicherheitsupdates
+Wenn Sie möchten, dass Ihre Microservices-Architektur gleichzeitig sicher und skalierbar ist, ist es eine gute Idee, in der frühen Entwicklungsphase einen Weg zu finden, um alle Ihre Software-Updates zu automatisieren oder zumindest unter Kontrolle zu halten.
+Eine hohe Testabdeckung ist hier wichtiger denn je. Jedes Mal, wenn ein Teil Ihres Systems aktualisiert wird, möchten Sie sicherstellen, dass Sie Probleme früh genug und so detailliert wie möglich erkennen.
+Stellen Sie sicher, dass Ihre Plattform größtenteils " atomar" ist. Das bedeutet, dass alles in Container eingeschlossen werden sollte,  sodass das Testen Ihrer Anwendung mit einer aktualisierten Bibliothek oder Sprachversion nur eine Frage des Umschließens eines anderen Containers ist. Sollte der Vorgang fehlschlagen, ist das Umkehren ziemlich einfach und kann vor allem automatisiert werden.
+
+### Überwachung
+Sie können es sich nicht leisten, ein verteiltes System ohne eine solide, fortschrittliche und zuverlässige Überwachungsplattform zu betreiben. Es gibt verschiedene Lösungen, aber die speziell für Microservices entwickelte Lösung, die es bisher gab, ist Prometheus.
+Prometheus wurde ursprünglich von Ingenieuren bei SoundCloud entwickelt und ist eine Open-Source-Überwachungsplattform und Teil der Cloud Native Computing Foundation . Es wird von einigen der größten Akteure der Branche wie SoundCloud selbst, CoreOS und Digital Ocean unterstützt und übernommen.
+Andere Überwachungslösungen umfassen InfluxDB , statsd und mehrere bekannte kommerzielle Plattformen.
+
+### Sicherheitsscanner
+Innerhalb Ihrer automatisierten Testsuite ist es sinnvoll, regelmäßige Schwachstellen- und Sicherheitsüberprüfungen für Ihre Container durchzuführen. Der Hauptdarsteller von Open Source in diesem Bereich scheint Clair von CoreOS zu sein. Docker Security Scanning und Twistlock sind einige kommerzielle Optionen.
+Beachten Sie außerdem, dass das Container-Image selbst möglicherweise nur dann als vertrauenswürdig eingestuft wird, wenn seine Signatur überprüft wurde. rkt tut dies standardmäßig, während Docker vor einiger Zeit eine ähnliche Funktion einführte, nachdem mehrere Sicherheitslücken gefunden wurden.
+
+
+## Performance
+Effizienz ist von größter Bedeutung in der realen, groß angelegten Architektur verteilter Systeme, und Mikroservice-Ökosysteme bilden keine Ausnahme von dieser Regel. Es ist einfach, die Effizienz eines einzelnen Systems (wie bei einer monolithischen Anwendung) zu quantifizieren, aber die Bewertung der Effizienz und die Erzielung einer höheren Effizienz in einem großen Ökosystem von Mikrodiensten, in dem Aufgaben zwischen Hunderten (wenn nicht Tausenden) von kleinen Diensten aufgeteilt werden, ist unglaublich schwer. Es ist auch durch die Gesetze der Computerarchitektur und verteilter Systeme begrenzt, die die Effizienz großer, komplexer verteilter Systeme einschränken: Je verteilter Ihr System ist und je mehr Mikrodienste Sie in diesem System einsetzen, desto geringer ist die Wahrscheinlichkeit Unterschied wird die Effizienz eines Microservices auf dem gesamten System haben. Die Vereinheitlichung von Grundsätzen zur Steigerung der Gesamteffizienz wird zur Notwendigkeit.
+
+
+## Availability
+Ein Mikroservice muss ausfallsicher sein und häufig auf einem anderen Computer neu gestartet werden können, um die Verfügbarkeit zu gewährleisten. Diese Ausfallsicherheit hängt auch von dem Status ab, der für den Mikrodienst gespeichert wurde, von dem der Mikrodienst diesen Status wiederherstellen kann, und davon, ob der Mikrodienst erfolgreich neu gestartet werden kann. Mit anderen Worten, es muss eine Ausfallsicherheit in der Rechenkapazität (der Prozess kann jederzeit neu gestartet werden) sowie eine Ausfallsicherheit im Zustand oder in den Daten (kein Datenverlust, und die Daten bleiben konsistent) bestehen.Die Probleme der Ausfallsicherheit verschärfen sich in anderen Szenarien, z. B. wenn während eines Anwendungsupgrades Fehler auftreten. Der mit dem Bereitstellungssystem zusammenarbeitende Microservice muss bestimmen, ob weiterhin auf die neuere Version oder auf eine frühere Version zurückgegriffen werden kann, um einen konsistenten Status beizubehalten. Fragen, wie zum Beispiel, ob genügend Maschinen verfügbar sind, um weiter voranzukommen, und wie frühere Versionen des Microservices wiederhergestellt werden können, müssen berücksichtigt werden. Dazu muss der Mikrodienst Integritätsinformationen senden, damit die gesamte Anwendung und der Orchestrator diese Entscheidungen treffen können.
+
+
+## Scaling
+Der Skalierbarkeitswürfel beschreibt die Skalierbarkeit anhand eines Würfelmodells. Der "Skalierungswürfel" besteht aus einer X-Achse, einer Y-Achse und einer Z-Achse. Die traditionelle Methode zur Skalierung durch Ausführen mehrerer Kopien einer Anwendung, die auf mehrere Server verteilt ist, ist die X-Achse.<br>
+
+Der allgemeine Ansatz von Microservices verläuft entlang der Y-Achse. Die Skalierung auf der Y-Achse unterteilt die Anwendung in ihre Komponenten und Dienste. Der Softwarearchitekt Chris Richardson erklärte diese Methode in einem Blogbeitrag: "Jeder Dienst ist für eine oder mehrere eng verwandte Funktionen verantwortlich. Es gibt verschiedene Möglichkeiten, die Anwendung in Dienste zu zerlegen. Ein Ansatz besteht darin, verbbasierte Zerlegung und Definition zu verwenden Services, die einen einzelnen Anwendungsfall implementieren, z. B. Checkout. Die andere Option besteht darin, die Anwendung nach Nomen zu zerlegen und Services zu erstellen, die für alle Vorgänge in Bezug auf eine bestimmte Entität verantwortlich sind, z -basierte Zersetzung."<br>
+
+Das verlässt die Z-Achse. Die X-Achse ist eine traditionelle Skalierung des Lastausgleichs und die Y-Achse umfasst Microservices. Die Z-Achse verfolgt einen ähnlichen Ansatz wie die X-Achse: Sie führt identische Codekopien auf mehreren Servern aus. Was die Z-Achsen-Skalierung einzigartig macht, ist, dass sie auch eine Seite von der Y-Achse ausleiht, sodass jeder Server nur für eine Teilmenge der Anwendung und nicht für die gesamte Anwendung verantwortlich ist.<br>
+
+
+## Load Balancing
+### Server Side Load Blancing
+In der Java EE-Architektur stellen wir unsere War- / Ear-Dateien auf mehreren Anwendungsservern bereit, erstellen dann einen Serverpool und stellen einen Load Balancer (Netscaler) davor, der eine öffentliche IP hat. Der Client stellt eine Anfrage unter Verwendung dieser öffentlichen IP, und Netscaler entscheidet, auf welchem ​​internen Anwendungsserver die Anfrage per Round-Robin- oder Sticky-Session-Algorithmus weitergeleitet wird. Wir nennen es Server Side Load Balancing.<br>
+
+**Problem:**  Wenn ein oder mehrere Server nicht mehr reagieren, müssen Sie diese Server manuell aus dem Load Balancer entfernen, indem Sie die IP-Tabelle des Load Balancers aktualisieren.
+Ein weiteres Problem besteht darin, dass wir eine Failover-Richtlinie implementieren müssen, um dem Client ein nahtloses Erlebnis zu bieten.
+Microservices verwenden jedoch keinen serverseitigen Lastenausgleich. Sie verwenden clientseitigen Lastenausgleich.
+
+### Client Side Load Balancing
+Beim clientseitigen Lastausgleich wird ein Algorithmus wie Round-Robin oder zonenspezifisch beibehalten. über die es Instanzen von aufrufenden Diensten aufrufen kann. Der Vorteil ist, dass sich die Serviceregistrierung immer selbst aktualisiert. Wenn eine Instanz ausfällt, wird sie aus der Registrierung entfernt. Wenn der clientseitige Load Balancer mit dem Eureka-Server kommuniziert, aktualisiert er sich immer selbst, sodass im Gegensatz zum serverseitigen Load Balancing keine manuellen Eingriffe zum Entfernen einer Instanz erforderlich sind.
+Ein weiterer Vorteil ist, dass Sie den Load-Balancing-Algorithmus programmgesteuert steuern können, da sich der Load-Balancer auf der Clientseite befindet. Ribbon bietet diese Möglichkeit, daher werden wir Ribbon für den clientseitigen Lastenausgleich verwenden.
+
+
+### Messaging
 
 
 
