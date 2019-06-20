@@ -220,6 +220,9 @@ The UI can only be accessed from the machine where the command is executed. See 
 <summary>LPI DevOps Tools Engineer - Exam 701</summary>
 <br>
 
+<details>
+<summary>Kapitel: 701.1 Modern Software Development (Status: Abgeschlossen)</summary>
+<br>
 # Kapitel: 701.1 Modern Software Development (Status: Abgeschlossen)
 
 **Weight**: 6 + 4 Bonsupunkte für die Erstellung eines Microservices inkl Unit-Tests.
@@ -441,6 +444,7 @@ Der Reiz der APIs ist zweifach für die meisten Unternehmen, da APIs oft das Med
 **Fazit und Aussicht**, Die Durcharbeitung von 701.1 Modern Software Development gab mir ein besseres Verständnis darüber wie ein Microservices verschiedene Aufgaben handhabt und verwendet.
 
 ***
+</details>
 
 # Kapitel: 701.2 Standard Components and Platforms for Software (Status: In Arbeit)
 
