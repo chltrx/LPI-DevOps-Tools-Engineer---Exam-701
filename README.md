@@ -566,14 +566,3 @@ TextTextText
 </details>
 
 </details>
-
-
-<details>
-<summary>LPI Linux Essentials - Exam 010</summary>
-<br>
-
-
-
-</details>
-
-</details>
