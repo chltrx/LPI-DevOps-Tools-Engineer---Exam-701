@@ -428,6 +428,7 @@ Anwendungen, die unter Verwendung der Mikroservice-Architektur entwickelt wurden
 * Überwachung der APIs
 * Überwachung über APIs
 
+
 ## APIs
 API steht für Application Programming Interface, wobei das Schlüsselwort interface ist . APIs sind sozusagen die Türen , durch die Entwickler mit einer Anwendung interagieren können.
 APIs gibt es seit den Anfängen des Computerbetriebs , die es Computern ermöglichen, Wiederholungsfunktionen aufzurufen, um das Aufblähen von Anwendungen zu verringern. Bei der Erörterung von APIs in der heutigen digitalen Wirtschaft geht es jedoch in der Regel um Web-APIs , die die B2B-Kommunikation erleichtern.
@@ -469,7 +470,78 @@ Der Reiz der APIs ist zweifach für die meisten Unternehmen, da APIs oft das Med
 
 **Beispiele und Arbeitsergebnisse**
 
-TextTextText
+## Object storage
+Objektspeicher ist eine Computer-Datenspeicherarchitektur, die Daten als Objekte verwaltet. Im Gegensatz zu anderen Speicherarchitekturen wie Dateisystemen, die Daten als Dateihierarchie verwalten, und Blockspeicher, die Daten Blöcke innerhalb von Sektoren und Spuren verwaltet. Jedes Objekt enthält normalerweise die Daten selbst, eine variable Menge an Metadaten und einen global eindeutigen Bezeichner. Die Objektspeicherung kann auf mehreren Ebenen implementiert werden, einschließlich der Geräteebene (Objektspeichergerät), der Systemebene und der Schnittstellenebene. In jedem Fall versucht der Objektspeicher Funktionen zu ermöglichen die von anderen Speicherarchitekturen nicht adressiert werden wie z.B. Schnittstellen, die von der Anwendung direkt programmiert werden können, einen Namespace, der mehrere Instanzen physischer Hardware umfassen kann und Datenverwaltungsfunktionen wie Datenreplikation und Datenverteilung auf Objektebene Granularität.
+Objektspeichersysteme ermöglichen die Speicherung großer Mengen an unstrukturierten Daten. Die Objektspeicherung wird beispielsweise zum Speichern von Fotos auf Facebook, von Titeln auf Spotify oder von Dateien in Online-Collaboration-Diensten wie Dropbox verwendet.
+
+
+## Relational and NoSQL databases
+### Data models
+Mit einer NoSQL-Datenbank kann man eine Anwendung erstellen, ohne zuerst das Schema definieren zu müssen, im Gegensatz zu relationalen Datenbanken, mit denen man das Schema definieren muss, bevor man dem System Daten hinzufügen kann. Kein vordefiniertes Schema erleichtert die Aktualisierung von NoSQL-Datenbanken erheblich, da sich Ihre Daten und Anforderungen ändern.
+
+### Data structure
+Relationale Datenbanken wurden in einer Ära erstellt, in der Daten durch ihre Beziehungen fair strukturiert und klar definiert waren. NoSQL-Datenbanken sind so konzipiert, dass sie unstrukturierte Daten (z. B. Texte, Social Media-Posts, Videos, E-Mails) verarbeiten,die einen Großteil der heute vorhandenen Daten ausmachen.
+
+### Scaling
+Die Skalierung einer NoSQL-Datenbank ist viel billiger als die einer relationalen Datenbank, da man durch Skalierung über billige Commodity-Server Kapazität hinzufügen kann. Relationale Datenbanken erfordern andererseits einen einzelnen Server, um ihre gesamte Datenbank zu hosten. Um zu skalieren, muss man einen größeren, teureren Server kaufen.
+
+### Development model
+NoSQL-Datenbanken sind Open-Source-Datenbanken, während relationale Datenbanken in der Regel Closed-Source-Datenbanken sind und Lizenzgebühren für die Verwendung ihrer Software anfallen. Mit NoSQL kann man in ein Projekt einsteigen, ohne vorher viel in Software-Gebühren investieren zu müssen.
+
+
+## Message brokers and message queues
+### Message broker
+Ein Message broker ist ein Vermittler Computerprogrammmodul, dass eine Nachricht von dem formalen Nachrichtenprotokoll von dem Sender zu dem formalen Nachrichtenprotokoll des Empfängers übersetzt. Nachrichtenbroker sind Elemente in Telekommunikations- oder Computernetzwerken, in denen Softwareanwendungen durch den Austausch von formal definierten Nachrichten kommunizieren. Nachrichtenbroker sind ein Baustein für nachrichtenorientierte Middleware (MOM), ersetzen jedoch in der Regel keine herkömmliche Middleware wie MOM und Remote Procedure Call (RPC).
+
+### Message queues
+Anwendungen, die Message-Queuing-Verfahren einsetzen, weisen folgende Hauptmerkmale auf:
+
+* Es bestehen keine Direktverbindungen zwischen Programmen.
+* Die Kommunikation zwischen Programmen kann zeitunabhängig erfolgen.
+* Die Arbeit kann von kleinen eigenständigen Programmen ausgeführt werden.
+* Die Kommunikation kann ereignisgesteuert sein.
+* Anwendungen können Nachrichten Prioritäten zuweisen.
+* Sicherheit.
+* Datenintegrität.
+* Unterstützung bei der Wiederherstellung.
+
+Message-Queuing stellt ein Verfahren für die indirekte Kommunikation zwischen Programmen dar. Dieses Verfahren kann in jeder Anwendung eingesetzt werden, in der Programme miteinander kommunizieren. Die Kommunikation erfolgt, indem ein Programm Nachrichten in eine (einem Warteschlangenmanager zugehörige) Warteschlange einreiht und ein anderes Programm die Nachrichten aus der Warteschlange abruft.
+Programme können Nachrichten abrufen, die von anderen Programmen in eine Warteschlange eingereiht wurden. Die anderen Programme können mit demselben Warteschlangenmanager wie das empfangende Programm oder aber mit einem anderen Warteschlangenmanager verbunden sein. Dieser andere Warteschlangenmanager kann sich auf einem anderen System, in einem anderen Computersystem oder sogar in einem anderen Unternehmen befinden.
+
+
+## Big data services
+Um Big Data zu verstehen, ist es hilfreich, den geschichtlichen Hintergrund zu kennen. Das ist die Definition von Gartner, die etwa aus dem Jahr 2001 stammt und nach wie vor die gängigste ist: Unter Big Data versteht man Daten, die in großer Vielfalt, in großen Mengen und mit hoher Geschwindigkeit anfallen. Dies ist auch als die drei V-Begriffe bekannt (Variety, Volume, Velocity).
+Einfach gesagt: Mit Big Data bezeichnet man größere und komplexere Datensätze, vor allem von neuen Datenquellen. Diese Datensätze sind so umfangreich, dass klassische Datenverarbeitungssoftware sie nicht verwalten kann. Aber mit diesen massiven Datenvolumina können Sie geschäftliche Probleme angehen, die Sie bislang nicht lösen konnten.
+
+### Volume
+Die Menge an Daten ist wichtig. Bei Big Data müssen Sie große Mengen an unstrukturierten Daten mit geringer Dichte verarbeiten. Dabei kann es sich um Daten mit unbekanntem Wert handeln, z. B. Daten-Feeds von Twitter, Clickstreams von einer Webseite oder mobilen App oder Daten von Gerätesensoren. Für einige Unternehmen können das etliche Terabytes an Daten sein. Für andere Hunderte von Petabytes.
+
+### Velocity
+Die Geschwindigkeit ist die Schnelligkeitsrate, mit der Daten empfangen werden und mit der (vielleicht) auf sie reagiert wird. Im Normalfall fließt die höchste Geschwindigkeit von Daten direkt in den Speicher und wird nicht auf eine Festplatte geschrieben. Einige internetfähige, intelligente Produkte arbeiten in Echtzeit oder beinahe in Echtzeit. Für sie sind Auswertungen und Aktionen in Echtzeit erforderlich.
+
+### Variety
+Vielfalt bezieht sich auf die zahlreichen verfügbaren Datentypen. Traditionelle Datentypen waren strukturiert und ideal für relationale Datenbanken geeignet. Durch die Zunahme von Big Data gibt es nun neue, unstrukturierte Datentypen. Unstrukturierte und semistrukturierte Datentypen wie Text, Audio und Video erfordern zusätzliche Vorabverarbeitung, um die Bedeutung und die unterstützenden Metadaten zu gewinnen.
+
+
+## Application runtimes / PaaS
+### Application runtimes
+Eine Laufzeitumgebung beschreibt die zur Laufzeit von Computerprogrammen verfügbaren und festgelegten Voraussetzungen eines bestimmten Laufzeitsystems. Dieses ist durch die elementaren Bestandteile der Programmiersprache wie das Verhalten von Sprachkonstrukten und weitere Funktionen wie Typprüfung, Debugging, Codegenerierung und -optimierung definiert. Zur Laufzeitumgebung gehören weiterhin Laufzeitbibliothek, Standardbibliotheken, Programmierschnittstellen, Laufzeit-Variablen sowie auf Hard- und Softwarekomponenten über Betriebssystemfunktionen.
+
+### PaaS
+Als Platform as a Service (PaaS) bezeichnet man eine Dienstleistung, die in der Cloud eine Computer-Plattform für Entwickler von Webanwendungen zur Verfügung stellt. Dabei kann es sich sowohl um schnell einsetzbare Laufzeitumgebungen (typischerweise für Webanwendungen), aber auch um Entwicklungsumgebungen handeln, die mit geringem administrativem Aufwand und ohne Anschaffung der darunterliegenden Hardware und Software genutzt werden können. Sie unterstützen den gesamten Software-Lebenszyklus vom Design über die Entwicklung, den Test, die Auslieferung bis hin zum Betrieb der Webanwendungen über das Internet. Platform as a Service ist ein Teil von Everything as a Service.
+Einige Angebote umfassen auch Dienste zur kollaborativen Arbeit und Versionierung, zum Monitoring und für die Sicherheit oder Middleware-Dienste zum Speichern von Daten oder für die Kommunikation zwischen Anwendungen. PaaS-Angebote bauen auf einer skalierbaren Infrastruktur (IaaS) von Speicher und Rechenleistung auf und können somit ebenfalls skalieren. Aufbauend auf einer PaaS-Umgebung können Software as a Service (SaaS)-Angebote entstehen. Somit ist PaaS die mittlere Schicht im Cloud Stack.
+
+
+## Content delivery networks
+Ein Content Delivery Network (CDN), oder auch Content Distribution Network genannt, ist ein Netz regional verteilter und über das Internet verbundener Server, mit dem Inhalte – insbesondere große Mediendateien – ausgeliefert werden. Ein CDN stellt skalierende Speicher- und Auslieferungskapazitäten zur Verfügung und gewährleistet auch bei großen Lastspitzen einen optimalen Datendurchsatz.
+CDN-Knoten sind auf viele Orte verteilt und oft auch auf viele Backbones. Sie arbeiten zusammen, um Anfragen (Requests) von End-Nutzern nach Inhalten (Content) möglichst ökonomisch zu bedienen. Einzelne Standorte werden als PoP (Point of Presence) bezeichnet und bestehen aus Server-Clustern.
+Im Hintergrund (Transparent) werden die Daten im Netz so vorgehalten (Caching), dass die jeweilige Auslieferung entweder möglichst schnell geht (Performance-Optimierung) oder möglichst wenig Bandbreite verbraucht (Kosten-Optimierung), oder beides zugleich.
+Große CDNs unterhalten tausende Knoten mit zehntausenden Servern.
+
+### Funktionsweise
+Das CDN besteht zunächst aus einem Ursprungsserver, auf dem der Inhalteanbieter die zu verteilenden Inhalte ablegt, einer großen Zahl an Replica-Servern, die Kopien dieser Inhalte vorhalten, und einem Distributionssystem, das die Inhalte auf den Replica-Servern verteilt. Für die Umleitung der Benutzeranfragen auf die einzelnen Replica-Server ist ein Request-Routing-System zuständig, welches sich dabei auf verschiedene Kennzahlen über diese Server stützt, die ihm vom Accounting-System geliefert werden.
+Sendet ein Client eine Anfrage an das CDN, dann wählt das Request-Routing-System einen geeigneten Replica-Server. Bei der Auswahl bezieht es Kennzahlen über deren aktuelle Belastung (zum Beispiel CPU-Auslastung, Anzahl der aktiven Verbindungen) und über die Netzwerkverbindung zwischen Client und Server (zum Beispiel geographische Entfernung, Latenzzeit, Übertragungsrate), seltener über die Identität des Clients (zum Beispiel Unterscheidung zwischen Standard- und Premium-User) mit ein, die ihm durch das Accounting-System zur Verfügung gestellt werden.
+Nach Auswahl des Servers muss die Benutzeranfrage nun umgeleitet werden. Das am häufigsten eingesetzte Verfahren dafür ist DNS-basiertes Request Routing. Dabei werden Anfragen des Clients an einen vom CDN bereitgestellten DNS-Server weitergeleitet, welcher die IP-Adresse des Replica-Servers zurückgibt. Alternativ dazu kann auch ein HTTP-Statuscode 302 die Weiterleitung auf einen anderen Webserver veranlassen.
 
 **Fazit und Aussicht**, Die Durcharbeitung von 701.2 Standard Components and Platforms for Software gab mir ein besseres Verständnis darüber was für Features und Konzepte von einzelnen "Diensten" für Cloud Platformen verwendet werden.
 
