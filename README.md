@@ -223,6 +223,7 @@ The UI can only be accessed from the machine where the command is executed. See 
 <details>
 <summary>Kapitel: 701.1 Modern Software Development (Status: Abgeschlossen)</summary>
 <br>
+
 # Kapitel: 701.1 Modern Software Development (Status: Abgeschlossen)
 
 **Weight**: 6 + 4 Bonsupunkte für die Erstellung eines Microservices inkl Unit-Tests.
