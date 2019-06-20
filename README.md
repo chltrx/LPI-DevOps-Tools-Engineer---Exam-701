@@ -221,7 +221,7 @@ The UI can only be accessed from the machine where the command is executed. See 
 <br>
 
 <details>
-<summary>Kapitel: 701.1 Modern Software Development (Status: Abgeschlossen)</summary>
+<summary>Kapitel: 701.1 Modern Software Development</summary>
 <br>
 
 # Kapitel: 701.1 Modern Software Development (Status: Abgeschlossen)
@@ -447,6 +447,10 @@ Der Reiz der APIs ist zweifach für die meisten Unternehmen, da APIs oft das Med
 ***
 </details>
 
+<details>
+<summary>Kapitel: 701.2 Standard Components and Platforms for Software</summary>
+<br>
+
 # Kapitel: 701.2 Standard Components and Platforms for Software (Status: In Arbeit)
 
 **Weight**: 2 + 6 Bonuspunkte für die Kombination des Microservices, aus Topic 701.1, mit einer NoSQL Datenbank.
@@ -470,6 +474,11 @@ TextTextText
 **Fazit und Aussicht**, Die Durcharbeitung von 701.2 Standard Components and Platforms for Software gab mir ein besseres Verständnis darüber was für Features und Konzepte von einzelnen "Diensten" für Cloud Platformen verwendet werden.
 
 ***
+</details>
+
+<details>
+<summary>Kapitel: 701.3 Source Code Management</summary>
+<br>
 
 # Kapitel: 701.3 Source Code Management (Status: In Arbeit)
 
@@ -494,6 +503,11 @@ TextTextText
 **Fazit und Aussicht**, Die Durcharbeitung von 701.3 Source Code Management gab mir ein besseres Verständnis darüber was für Features und Eigenschaften Git hat, wie Git diese verwendet und wie man sie selber anwenden.
 
 ***
+</details>
+
+<details>
+<summary>Kapitel: 702.1 Container Usage</summary>
+<br>
 
 # Kapitel: 702.1 Container Usage (Status: In Arbeit)
 
@@ -516,6 +530,12 @@ TextTextText
 **Fazit und Aussicht**, Die Durcharbeitung von 702.1 Container Management gab mir ein besseres Verständnis über die Funktionsweise von Containern.
 
 ***
+
+</details>
+
+<details>
+<summary>Kapitel: 702.2 Container Deployment and Orchestration</summary>
+<br>
 
 # Kapitel: 702.2 Container Deployment and Orchestration (Status: In Arbeit)
 
@@ -542,6 +562,8 @@ TextTextText
 **Fazit und Aussicht**, Die Durcharbeitung von 701.3 Source Code Management gab mir ein besseres Verständnis darüber was für Features und Eigenschaften Git hat, wie Git diese verwendet und wie man sie selber anwenden.
 
 ***
+
+</details>
 
 </details>
 
