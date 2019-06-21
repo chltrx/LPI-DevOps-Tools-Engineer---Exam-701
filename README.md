@@ -804,7 +804,7 @@ Der Grundbefehl docker runhat folgende Form:
 <summary>Kapitel: 702.2 Container Deployment and Orchestration</summary>
 <br>
 
-# Kapitel: 702.2 Container Deployment and Orchestration (Status: In Arbeit)
+# Kapitel: 702.2 Container Deployment and Orchestration (Status: Abgeschlossen)
 
 **Weight**: 5
 
