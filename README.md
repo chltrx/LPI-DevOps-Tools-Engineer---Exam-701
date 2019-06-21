@@ -644,6 +644,12 @@ Die typische Benutzeransicht einer Datei, die Revisionen enthält und von einer 
 **Weight**: 7 (nur wer das Modul M300 nicht besucht hat + 7 Bonuspunkte). Es wird ein Beschrieb Linux Technologien und Container erwartet.
 
 **Beschreibung** Auflistung welche Linux Technologien für Container verwendet werden.
+* Namespaces
+* Container
+* UnionFS
+* Container Layers
+* Linux jobs & processes
+* Docker run/start/stop
 
 **Tagesziele**, Erstellung einer Auflistung zu Linux Container Technologien. 
 
@@ -669,7 +675,7 @@ Ein heutiger Einsatzzweck ist die Überlagerung von schreibgeschützten Dateisys
 UnionFS wurde sowohl für Linux als auch für diverse BSD-Varianten implementiert und wird zum Beispiel bei Live-CDs von Damn Small Linux erfolgreich eingesetzt.
 
 
-## Container Layer
+## Container Layers
 Docker-Container sind Bausteine ​​für Anwendungen. Jeder Container ist ein Bild mit einer read/write Ebene über einer Reihe schreibgeschützter Ebenen.
 Diese Ebenen (auch als Zwischenbilder bezeichnet) werden generiert, wenn die Befehle in der Docker-Datei während der Erstellung des Docker-Images ausgeführt werden.
 Hier ist beispielsweise eine Docker-Datei zum Erstellen eines Web-App- Images für node.js. Es werden die Befehle angezeigt, die zum Erstellen des Abbilds ausgeführt werden.
@@ -818,7 +824,7 @@ Der Grundbefehl docker runhat folgende Form:
 
 **Beispiele und Arbeitsergebnisse**
 
-TextTextText
+## Architecture and application model of Kubernetes
 
 **Fazit und Aussicht**, Die Durcharbeitung von 701.3 Source Code Management gab mir ein besseres Verständnis darüber was für Features und Eigenschaften Git hat, wie Git diese verwendet und wie man sie selber anwenden.
 
