@@ -452,7 +452,7 @@ Der Reiz der APIs ist zweifach für die meisten Unternehmen, da APIs oft das Med
 <summary>Kapitel: 701.2 Standard Components and Platforms for Software</summary>
 <br>
 
-# Kapitel: 701.2 Standard Components and Platforms for Software (Status: In Arbeit)
+# Kapitel: 701.2 Standard Components and Platforms for Software (Status: Abgeschlossen)
 
 **Weight**: 2 + 6 Bonuspunkte für die Kombination des Microservices, aus Topic 701.1, mit einer NoSQL Datenbank.
 
@@ -552,7 +552,7 @@ Nach Auswahl des Servers muss die Benutzeranfrage nun umgeleitet werden. Das am 
 <summary>Kapitel: 701.3 Source Code Management</summary>
 <br>
 
-# Kapitel: 701.3 Source Code Management (Status: In Arbeit)
+# Kapitel: 701.3 Source Code Management (Status: Abgeschlossen)
 
 **Weight**: 5
 
