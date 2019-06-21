@@ -824,7 +824,77 @@ Der Grundbefehl docker runhat folgende Form:
 
 **Beispiele und Arbeitsergebnisse**
 
-## Architecture and application model of Kubernetes
+## Architecture and application model of Kubernetes / Definition of Deployments, Services, Pods and ReplicaSets
+Kubernetes ist ein von Google entwickeltes Open-Source-Orchestrierungs-Tool zum Verwalten von Microservices oder containerisierten Anwendungen in einem verteilten Cluster von Knoten. Kubernetes bietet hoch belastbare Infrastruktur ohne Ausfallzeiten Bereitstellungsfunktionen, automatisches Rollback, Skalierung und Selbstheilung von Containern (die von Auto-Platzierung besteht, Auto-Neustart, automatische Replikation , und die Skalierung von Containern auf Basis der CPU - Auslastung).
+Das Hauptziel von Kubernetes besteht darin, die Komplexität der Verwaltung einer Containerflotte zu verbergen, indem REST-APIs für die erforderlichen Funktionen bereitgestellt werden. Kubernetes ist portabel und kann auf verschiedenen öffentlichen oder privaten Cloud-Plattformen wie AWS, Azure, OpenStack oder Apache Mesos ausgeführt werden. Es kann auch auf Bare-Metal-Maschinen ausgeführt werden.<br>
+
+Kubernetes folgt einer Client-Server-Architektur. Es ist möglich, eine Multi-Master Einrichtung (für hohe Verfügbarkeit) zu haben, aber standardmäßig gibt es einen einzigen Master-Server, der als Kontrollorgan fungiert Knoten und den Punkt des Kontakts. Der Master-Server besteht aus verschiedenen Komponenten, darunter einem Cube-Apiserver, einem etcd-Speicher, einem Cube-Controller-Manager, einem Cloud-Controller-Manager, einem Cube-Scheduler und einem DNS-Server für Kubernetes-Dienste. Zu den Knotenkomponenten gehören kubelet und kube-proxy über Docker.<br>
+
+Im Folgenden sind die Hauptkomponenten aufgeführt, die sich auf dem Masterknoten befinden:
+
+* etcd-Cluster - Ein einfacher, verteilter Schlüsselwertspeicher, in dem die Kubernetes-Clusterdaten (wie Anzahl der Pods, Status, Namespace usw.), API-Objekte und Details zur Serviceerkennung gespeichert werden. Sie ist aus Sicherheitsgründen nur vom API-Server aus zugänglich. etcd ermöglicht die Benachrichtigung des Clusters über Konfigurationsänderungen mithilfe von Beobachtern. Benachrichtigungen sind API-Anforderungen auf jedem etcd-Clusterknoten, um die Aktualisierung von Informationen im Speicher des Knotens auszulösen.
+* kube-apiserver - Der Kubernetes API-Server ist die zentrale Verwaltungseinheit, die alle REST-Anforderungen für Änderungen (an Pods, Diensten, Replikationssätzen / Controllern und anderen) empfängt und als Frontend für den Cluster dient. Dies ist auch die einzige Komponente, die mit dem etcd-Cluster kommuniziert und sicherstellt, dass die Daten in etcd gespeichert sind und mit den Servicedetails der bereitgestellten Pods übereinstimmen.
+* kube-controller-manager - führt im Hintergrund eine Reihe unterschiedlicher Controller-Prozesse aus (z. B. steuert der Replikations-Controller die Anzahl der Replikate in einem Pod, der Endpunkt-Controller füllt Endpunktobjekte wie Dienste und Pods und andere), um den gemeinsam genutzten Status des zu regeln Cluster und Routineaufgaben ausführen. Wenn eine Änderung in einer Dienstkonfiguration auftritt (z. B. durch Ersetzen des Images, von dem die Pods ausgeführt werden, oder durch Ändern von Parametern in der Konfigurationsdatei), erkennt der Controller die Änderung und beginnt, auf den neuen gewünschten Status hinzuarbeiten.
+* Cloud-Controller-Manager - ist für die Verwaltung von Controller-Prozessen mit Abhängigkeiten zum zugrunde liegenden Cloud-Anbieter verantwortlich (falls zutreffend). Wenn ein Controller beispielsweise überprüfen muss, ob ein Knoten beendet wurde, oder Routen, Load Balancer oder Volumes in der Cloud-Infrastruktur einrichten muss, übernimmt der Cloud-Controller-Manager alles.
+* kube-scheduler - hilft bei der Planung der Pods (eine Gruppe von Containern, in denen unsere Anwendungsprozesse ausgeführt werden) auf den verschiedenen Knoten basierend auf der Ressourcennutzung. Es liest die Betriebsanforderungen des Dienstes und plant sie auf dem am besten geeigneten Knoten. Wenn die Anwendung beispielsweise 1 GB Arbeitsspeicher und 2 CPU-Kerne benötigt, werden die Pods für diese Anwendung auf einem Knoten mit mindestens diesen Ressourcen geplant. Der Scheduler wird jedes Mal ausgeführt, wenn Pods geplant werden müssen. Der Scheduler muss die insgesamt verfügbaren Ressourcen sowie die Ressourcen kennen, die den vorhandenen Workloads auf jedem Knoten zugeordnet sind.
+
+### Worker komponenten
+Nachfolgend sind die Hauptkomponenten eines (Worker-) Knotens aufgeführt:
+
+* kubelet - der Hauptdienst auf einem Knoten, der regelmäßig neue oder geänderte Pod-Spezifikationen (hauptsächlich über den kube-apiserver) erfasst und sicherstellt, dass die Pods und ihre Container in einwandfreiem Zustand sind und im gewünschten Zustand ausgeführt werden. Diese Komponente meldet dem Master auch den Zustand des Hosts, auf dem sie ausgeführt wird.
+* kube-proxy - Ein Proxy-Dienst, der auf jedem Arbeitsknoten ausgeführt wird, um einzelne Host-Subnetze zu verarbeiten und Dienste für die Außenwelt bereitzustellen. Es führt eine Anforderungsweiterleitung an die richtigen Pods / Container über die verschiedenen isolierten Netzwerke in einem Cluster durch.
+
+### Kubernetes Konzepte
+Um Kubernetes nutzen zu können, muss man die verschiedenen Abstraktionen kennen, mit denen der Status des Systems dargestellt wird, z.B. Dienste, Pods, Volumes, Namespaces und Bereitstellungen.
+
+* Pod - bezieht sich im Allgemeinen auf einen oder mehrere Container, die als einzelne Anwendung gesteuert werden sollen. Ein Pod kapselt Anwendungscontainer, Speicherressourcen, eine eindeutige Netzwerk-ID und andere Informationen zur Ausführung der Container.
+* Service- Pods sind flüchtig, d. H. Kubernetes garantiert nicht, dass ein bestimmter physischer Pod am Leben bleibt (z. B. kann der Replikations-Controller einen neuen Satz von Pods beenden und starten). Stattdessen stellt ein Dienst eine logische Gruppe von Pods dar und fungiert als Gateway, sodass (Client-) Pods Anforderungen an den Dienst senden können, ohne nachverfolgen zu müssen, aus welchen physischen Pods der Dienst tatsächlich besteht.
+* Volume - Ähnlich wie ein Containervolume in Docker, jedoch gilt ein Kubernetes-Volume für einen gesamten Pod und ist auf allen Containern im Pod aktiviert. Kubernetes garantiert, dass die Daten auch nach einem Neustart des Containers erhalten bleiben. Die Lautstärke wird nur entfernt, wenn der Pod zerstört wird. Außerdem können einem Pod mehrere Volumes (möglicherweise unterschiedlichen Typs) zugeordnet sein.
+* Namespace - Ein virtueller Cluster (ein einzelner physischer Cluster kann mehrere virtuelle Cluster ausführen), der für Umgebungen mit vielen Benutzern vorgesehen ist, die auf mehrere Teams oder Projekte verteilt sind, um Bedenken zu isolieren. Ressourcen in einem Namespace müssen eindeutig sein und können nicht auf Ressourcen in einem anderen Namespace zugreifen. Außerdem kann einem Namespace ein Ressourcenkontingent zugewiesen werden, um zu vermeiden, dass mehr als sein Anteil an den Gesamtressourcen des physischen Clusters verbraucht wird.
+* Bereitstellung - Beschreibt den gewünschten Status eines Pods oder eines Replikatsatzes in einer Yaml-Datei. Der Deployment Controller aktualisiert dann nach und nach die Umgebung (z. B. Erstellen oder Löschen von Replikaten), bis der aktuelle Status dem in der Deployment-Datei angegebenen gewünschten Status entspricht. Wenn in der yaml-Datei beispielsweise zwei Replikate für einen Pod definiert sind, aber derzeit nur eines ausgeführt wird, wird ein weiteres erstellt. Beachten Sie, dass Replikate, die über eine Bereitstellung verwaltet werden, nicht direkt bearbeitet werden sollten, sondern nur über neue Bereitstellungen.
+
+
+## Docker-compose
+Docker-Compose ist ein Tool zum Definieren und Ausführen von Docker-Anwendungen mit mehreren Containern. Docker-Compose verwendet eine YAML-Datei, um die Dienste Ihrer Anwendung zu konfigurieren. Anschließend erstellen und starten Sie mit einem einzigen Befehl alle Dienste aus Ihrer Konfiguration. Docker-Compose funktioniert in allen Umgebungen: Produktion, Staging, Entwicklung, Test sowie CI-Workflows.<br>
+
+Die Verwendung von Compose besteht im Wesentlichen aus drei Schritten:
+
+* Definieren der Umgebung der App mit einem Dockerfile, damit es überall reproduziert werden kann.
+* Definieren der Services, aus denen die App besteht, docker-compose.yml damit die Apps in einer isolierten Umgebung gemeinsam ausgeführt werden können.
+* docker-compose up ausführen und Docker-Compose startet und führt die gesamte App aus.
+
+### Beispiel Docker-Compose.yml Datei
+
+    version: '3'
+    services:
+      web:
+        build: .
+        ports:
+        - "5000:5000"
+        volumes:
+        - .:/code
+        - logvolume01:/var/log
+        links:
+        - redis
+      redis:
+        image: redis
+    volumes:
+      logvolume01: {}
+
+## Docker
+Docker vereinfacht die Bereitstellung von Anwendungen, weil sich Container, die alle nötigen Pakete enthalten, leicht als Dateien transportieren und installieren lassen. Container gewährleisten die Trennung und Verwaltung der auf einem Rechner genutzten Ressourcen. Das beinhaltet laut Aussage der Entwickler: 
+* Code
+* Laufzeitmodul
+* Systemwerkzeuge
+* Systembibliotheken
+
+Docker basiert auf Linux-Techniken wie Cgroups und Namespaces, um Container zu realisieren. Während anfänglich noch die LXC-Schnittstelle des Linux-Kernels verwendet wurde, haben die Docker-Entwickler mittlerweile eine eigene Programmierschnittstelle namens libcontainer entwickelt, die auch anderen Projekten zur Verfügung steht. Als Speicher-Backend verwendet Docker das Overlay-Dateisystem AuFS, ab Version 0.8 unterstützt die Software aber auch btrfs.
+Prinzipiell ist Docker auf die Virtualisierung mit Linux ausgerichtet. Docker kann allerdings auch mittels Hyper-V oder VirtualBox auf Windows und mittels VirtualBox auf macOS verwendet werden. Da die Ressourcentrennung alleine mit den Docker zugrunde liegenden Techniken wie Namespaces und Cgroups nicht völlig sicher ist, hat die Firma Red Hat Unterstützung für die sicherheitsrelevante Kernel-Erweiterung SELinux implementiert, welche die Container auf der Ebene des Host-Systems zusätzlich absichert.
+
+
+## Kubectl
+Der Befehl kubectl ist ein Leitungstool, das mit kube-apiserver interagiert und Befehle an den Masterknoten sendet. Jeder Befehl wird in einen API-Aufruf umgewandelt. Kubectl ist eine Befehlszeilenschnittstelle zum Ausführen von Befehlen für Kubernetes-Cluster. kubectlsucht nach einer Datei namens config im Verzeichnis $ HOME / .kube. Sie können andere kubeconfig- Dateien angeben, indem Sie die Umgebungsvariable KUBECONFIG oder das --kubeconfigFlag setzen.
+
 
 **Fazit und Aussicht**, Die Durcharbeitung von 701.3 Source Code Management gab mir ein besseres Verständnis darüber was für Features und Eigenschaften Git hat, wie Git diese verwendet und wie man sie selber anwenden.
 
