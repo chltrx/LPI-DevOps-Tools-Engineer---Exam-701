@@ -773,8 +773,7 @@ Der Grundbefehl docker runhat folgende Form:
 | Name, Kurzform          | Beschreibung      |
 | -------------- | -------------- |
 | --attach , -a     | STDOUT / STDERR anhängen und Signale weiterleiten |
-| --checkpoint	        | Wiederherstellen von diesem Checkpoint
-       |
+| --checkpoint	        | Wiederherstellen von diesem Checkpoint |
 | --checkpoint-dir  | Verwenden von einem benutzerdefinierten Checkpoint-Speicherverzeichnis     |
 | --detach-keys	  | Überschreibt die Tastenfolge zum Entfernen eines Containers     |
 | --interactive , -i  | 	Befestigen des STDIN eines Containers    |
