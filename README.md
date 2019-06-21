@@ -557,12 +557,12 @@ Nach Auswahl des Servers muss die Benutzeranfrage nun umgeleitet werden. Das am 
 **Weight**: 5
 
 **Beschreibung** Aufstellung von Features und Eigenschaften von Git:
-* Git conecpts and repository structure
+* Git concepts and repository structure
 * Manage files within a Git repostitory
 * Manage branches and tags
-* Work with remote repositories and branhes as well as submodules
+* Work with remote repositories and branches as well as submodules
 * Merge files and branches
-* Awareness of SVN and CVS, including concepts of centralized an distributed SCM solutions
+* Awareness of SVN and CVS, including concepts of centralized and distributed SCM solutions
 
 **Tagesziele**, Aufstellung der oben genannten Features und Eingenschaften von Git.
 
@@ -570,9 +570,69 @@ Nach Auswahl des Servers muss die Benutzeranfrage nun umgeleitet werden. Das am 
 
 **Beispiele und Arbeitsergebnisse**
 
-TextTextText
+## How Git works ++
+Ein Git- Repository ist einfach eine Datenbank, die alle Informationen enthält, die zum Speichern und Verwalten der Revisionen und des Verlaufs eines Projekts erforderlich sind. In Git behält ein Repository wie bei den meisten Versionskontrollsystemen eine vollständige Kopie des gesamten Projekts während seiner gesamten Lebensdauer. Im Gegensatz zu den meisten anderen VCSs bietet das Git-Repository jedoch nicht nur eine vollständige Arbeitskopie aller Dateien im Repository, sondern auch eine Kopie des Repositorys selbst, mit dem gearbeitet werden soll.<br>
 
-**Fazit und Aussicht**, Die Durcharbeitung von 701.3 Source Code Management gab mir ein besseres Verständnis darüber was für Features und Eigenschaften Git hat, wie Git diese verwendet und wie man sie selber anwenden.
+Git verwaltet eine Reihe von Konfigurationswerten in jedem Repository wie z. B. den Namen und die E-Mail-Adresse des Repository-Benutzers. Im Gegensatz zu Dateidaten und anderen Repository-Metadaten werden Konfigurationseinstellungen während eines Klon- oder Dupliziervorgangs nicht von einem Repository auf ein anderes übertragen. Stattdessen verwaltet und überprüft Git die Konfigurations- und Einrichtungsinformationen auf Site-, Benutzer- und Repository-Basis.<br>
+
+In einem Repository verwaltet Git zwei primäre Datenstrukturen, den Objektspeicher und den Index . Alle diese Repository-Daten werden im Stammverzeichnis Ihres Arbeitsverzeichnisses in einem versteckten Unterverzeichnis mit dem Namen .git gespeichert. <br>
+
+Der Objektspeicher soll während einer Klonoperation als Teil des Mechanismus, der ein vollständig verteiltes VCS unterstützt, effizient kopiert werden. Beim Index handelt es sich um vorübergehende Informationen, die für ein Repository privat sind und bei Bedarf erstellt oder geändert werden können.
+
+### Blobs
+Jede Version einer Datei wird als Blob dargestellt . " Blob " ist eine Abkürzung für " binäres großes Objekt ", ein Begriff, der üblicherweise beim Rechnen verwendet wird, um sich auf eine Variable oder Datei zu beziehen, die beliebige Daten enthalten kann und deren interne Struktur vom Programm ignoriert wird. Ein Klecks wird als undurchsichtig behandelt. Ein Blob enthält die Daten einer Datei, jedoch keine Metadaten über die Datei oder sogar ihren Namen.
+
+### Trees
+Ein Baum - Objekt stellt eine Ebene der Verzeichnisinformationen. Es zeichnet Blob-IDs, Pfadnamen und einige Metadaten auffür alle Dateien in einem Verzeichnis. Es kann auch rekursiv auf andere (Unter-) Baumobjekte verweisen und so eine vollständige Hierarchie von Dateien und Unterverzeichnissen erstellen.
+
+### Commits
+Ein Commit enthält Metadaten für jede im Repository eingeführte Änderung, einschließlich Autor, Datum und Protokollnachricht. Jedes Commit verweist auf ein Baumobjekt, das in einem vollständigen Schnappschuss Folgendes erfasst: 
+
+    Der Status des Repositorys zum Zeitpunkt der Ausführung des Commits. 
+    Das ursprüngliche Commit oder Root-Commit hat kein übergeordnetes Element. 
+
+### Tags
+Ein Tag- Objekt weist einem bestimmten Objekt, normalerweise einem Commit, einen beliebigen, jedoch vermutlich von Menschen lesbaren Namen zu. Obwohl es 9da581d910c9c4ac93557ca4859e767f5caf5169 sich um ein genaues und genau definiertes Commit handelt, ist ein vertrauterer Tag-Name Ver-1.0-Alphamöglicherweise sinnvoller.
+
+### Index
+Der Index ist eine temporäre und dynamische Binärdatei, die die Verzeichnisstruktur des gesamten Repository beschreibt. Insbesondere erfasst der Index zu einem bestimmten Zeitpunkt eine Version der Gesamtstruktur des Projekts. Der Status des Projekts kann durch ein Festschreiben und einen Baum von einem beliebigen Punkt in der Projektgeschichte aus dargestellt werden, oder es kann sich um einen zukünftigen Status handeln, auf den Sie sich aktiv hinentwickeln.<br>
+
+Eines der wichtigsten Unterscheidungsmerkmale von Git ist, dass man den Inhalt des Index in methodischen, genau definierten Schritten ändern kann. Der Index ermöglicht eine Trennung zwischen inkrementellen Entwicklungsschritten und der Übernahme dieser Änderungen.
+
+### Content-Addressable Names
+Der Git-Objektspeicherist als inhaltsadressierbares Speichersystem organisiert und implementiert. Insbesondere hat jedes Objekt im Objektspeicher einen eindeutigen Namen, der durch Anwenden von SHA1 auf den Inhalt des Objekts erzeugt wird und einen SHA1-Hashwert ergibt. Da der vollständige Inhalt eines Objekts zum Hash-Wert beiträgt und davon ausgegangen wird, dass der Hash-Wert für diesen bestimmten Inhalt eindeutig ist, ist der SHA1-Hash ein ausreichender Index oder Name für dieses Objekt in der Objektdatenbank. Bei jeder geringfügigen Änderung an einer Datei ändert sich der SHA1-Hash, wodurch die neue Version der Datei separat indiziert wird.
+
+### Content-Tracking-System
+Es ist wichtig, Git nicht nur als Versionskontrollsystem zu betrachten denn Git ist auch ein Content-Tracking-System. Diese noch so subtile Unterscheidung leitet einen Großteil des Designs von Git und ist möglicherweise der Hauptgrund, warum Git interne Datenmanipulationen relativ einfach durchführen kann. Dies ist jedoch möglicherweise auch eines der am schwierigsten zu erfassenden Konzepte für neue Git-Benutzer. Daher lohnt sich eine Einführung.<br>
+
+Der Objektspeicher von Git basiert auf der Hash-Berechnung des Inhalts seiner Objekte, nicht auf den Datei- oder Verzeichnisnamen aus dem ursprünglichen Dateilayout des Benutzers. Wenn Git eine Datei in den Objektspeicher legt, basiert dies auf dem Hash der Daten und nicht auf dem Namen der Datei. Tatsächlich verfolgt Git keine Datei- oder Verzeichnisnamen, die Dateien auf sekundäre Weise zugeordnet sind. Auch hier verfolgt Git Inhalte anstelle von Dateien.<br>
+
+Wenn zwei separate Dateien in zwei verschiedenen Verzeichnissen genau denselben Inhalt haben, speichert Git eine einzige Kopie dieses Inhalts als Blob im Objektspeicher. Git berechnet den Hash-Code jeder Datei ausschließlich anhand ihres Inhalts, stellt fest, dass die Dateien dieselben SHA1-Werte und damit denselben Inhalt haben, und platziert das Blob-Objekt in dem durch diesen SHA1-Wert indizierten Objektspeicher. Beide Dateien im Projekt verwenden, unabhängig davon, wo sie sich in der Verzeichnisstruktur des Benutzers befinden, dasselbe Objekt für den Inhalt.<br>
+
+Wenn sich eine dieser Dateien ändert, berechnet Git einen neuen SHA1 und stellt fest, dass es sich nun um ein anderes Blob-Objekt handelt und fügt den neuen Blob dem Objektspeicher hinzu. Der ursprüngliche Blob verbleibt im Objektspeicher, damit die unveränderte Datei verwendet werden kann.<br>
+
+Dazu speichert die interne Datenbank von Git effizient jede Version jeder Datei - nicht deren Unterschiede - während die Dateien von einer Revision zur nächsten wechseln. Da Git den Hash des gesamten Inhalts einer Datei als Namen für diese Datei verwendet, muss jede vollständige Kopie der Datei bearbeitet werden. Es kann seine Arbeit oder seine Objektspeichereinträge nicht nur auf einen Teil des Dateiinhalts oder auf die Unterschiede zwischen zwei Revisionen dieser Datei stützen.<br>
+
+Die typische Benutzeransicht einer Datei, die Revisionen enthält und von einer Revision zur nächsten zu wechseln scheint, ist einfach ein Artefakt. Git berechnet diesen Verlauf als eine Reihe von Änderungen zwischen verschiedenen Blobs mit unterschiedlichen Hashes, anstatt einen Dateinamen und eine Reihe von Unterschieden direkt zu speichern. Es mag seltsam erscheinen, aber diese Funktion ermöglicht es Git, bestimmte Aufgaben mit Leichtigkeit auszuführen.
+
+### SVN vs. CVS
+
+| Nr.            | Vergelichselement | CVS            | SVN               |
+| -------------- | -------------- | ----------------- | ----------------- |
+| 1              | Repository-Format |CVS basiert auf RCS-Dateien der Versionskontrolle. Jede mit CVS verbundene Datei ist eine gewöhnliche Datei, die einige zusätzliche Informationen enthält. Es ist ganz natürlich, dass der Baum dieser Dateien den Dateibaum im lokalen Verzeichnis wiederholt. Daher sollten Sie mit CVS keine Angst vor Datenverlust haben und können RCS-Dateien bei Bedarf problemlos korrigieren.|Die Basis von SVN ist eine relationale Datenbank (BerkleyDB), entweder ein Satz von Binärdateien (FS_FS). Dies behebt einerseits viele Probleme (z.B. gleichzeitiger Zugriff über die Dateifreigabe) und ermöglicht neue Funktionen (z.B. Transaktionen bei der Betriebsleistung). Andererseits ist die Datenspeicherung jetzt nicht transparent oder steht zumindest nicht für Benutzereingriffe zur Verfügung. Aus diesem Grund werden die Hilfsprogramme zum "Bereinigen" und "Wiederherstellen" des Repositorys (der Datenbank) bereitgestellt.|
+| 2              | Geschwindigkeit |CVS arbeitet langsamer.|Insgesamt arbeitet SVN aufgrund einiger konstruktiver Lösungen wirklich schneller als CVS. Es überträgt weniger Informationen über das Netzwerk und unterstützt mehr Vorgänge im Offline-Modus. Es gibt jedoch die Umkehrung der Medaille. Die Geschwindigkeitssteigerung erfolgt im Wesentlichen auf Kosten der vollständigen Sicherung aller Arbeitsdateien auf Ihrem Computer.|
+| 3              | Tags & Branches |Diese werden normal und ordnungsgemäß umgesetzt.	|Die SVN-Entwickler behaupten mit Stolz, dass sie durch die Arbeit mit Tags und Zweigen drei Messungen eliminiert haben. In der Praxis bedeutet dies, dass beide Konzepte durch die Möglichkeit ersetzt wurden, Dateien oder Verzeichnisse im Repository zu kopieren, wobei der Änderungsverlauf gespeichert wurde. Das heißt, sowohl die Tag-Erstellung als auch die Zweig-Erstellung werden durch das Kopieren innerhalb des Repository ersetzt. Aus Sicht der SVN-Entwickler ist dies eine sehr elegante Entscheidung, die das Leben vereinfacht. Wir sind jedoch der Meinung, dass es nichts gibt, worauf wir stolz sein können. Bei Zweigen ist alles nicht so schlimm, jetzt sind Zweige nichts anderes als separate Ordner im Repository, die früher miteinander verbunden waren. Was Tags betrifft, ist alles viel schlimmer. Jetzt können Sie keinen Code mehr markieren, diese Funktion fehlt einfach. Bestimmt, Zum Teil wird dies durch die universelle Nummerierung der Dateien in SVN ausgeglichen, dh das gesamte Repository erhält die Versionsnummer, jedoch nicht jede einzelne Datei. Wir nehmen jedoch an, dass Sie nicht leugnen werden, dass es nicht sehr bequem ist, eine vierstellige Zahl anstelle eines symbolischen Tags zu speichern.|  
+| 4              | Metadaten       |CVS erlaubt nur das Speichern von Dateien und sonst nichts.	|SVN erlaubt es, eine beliebige Anzahl aller möglichen benannten Attribute an eine Datei anzuhängen.|  
+| 5              | Datentypen      |CVS war ursprünglich zur Speicherung von Textdaten gedacht. Aus diesem Grund ist die Speicherung anderer Dateien (binär, Unicode) nicht trivial und erfordert spezielle Informationen sowie Anpassungen auf Server- oder Clientseite.|SVN bearbeitet alle Dateitypen und benötigt keine Anweisungen.|  
+| 6              | Rollback        |CVS ermöglicht das Rollback von Commits im Repository, auch wenn dies einige Zeit in Anspruch nimmt (jede Datei sollte unabhängig verarbeitet werden).|SVN erlaubt kein Rollback des Commits. Die Autoren schlagen vor, einen guten Repository-Status an das Ende des Trunks zu kopieren, um einen fehlerhaften Commit zu überschreiben. Ein schlechtes Commit selbst verbleibt jedoch im Repository.|  
+| 7              | Transaktionen   |In CVS fehlt die Unterstützung von Transaktionen nach dem Prinzip "Alles oder Nichts" vollständig. Wenn Sie beispielsweise mehrere Dateien einchecken (auf den Server übertragen), wird der Vorgang möglicherweise nur für einige dieser Dateien abgeschlossen und für den Rest nicht (z. B. aufgrund von Konflikten). In der Regel ist es ausreichend, die Situation zu korrigieren und den Vorgang für die verbleibenden Dateien (nicht für alle Dateien) zu wiederholen. Das heißt, die Dateien werden in zwei Schritten eingecheckt. Es wurden keine Fälle von Lagerschäden aufgrund des Fehlens dieser Funktionalität beobachtet.|SVN unterstützt Transaktionen nach dem Prinzip "Alles oder Nichts".
+| 
+| 8              | Verfügbarkeit   | CVS wird überall dort unterstützt, wo man es benötigt.	|SVN ist noch nicht so weit verbreitet, so dass es Stellen gibt, an denen es noch nicht implementiert ist.
+|  
+| 9              | Interne Architektur und Code |CVS ist ein sehr altes System. Ursprünglich wurde CVS als eine Reihe von Skripten rund um die ausführbare RCS-Datei geschrieben. Später wurde dies in eine einzelne ausführbare Datei gepackt. Die interne Struktur des Codes ist jedoch schlecht und enthält viele historische Korrekturen. Bis jetzt gab es mehrere Versuche, CVS von Grund auf neu zu schreiben, aber wie bekannt, ohne Erfolg. Wir haben persönlich versucht, Client-Code zu extrahieren, um eine bessere Integration zwischen Plug-In und CVS zu erreichen, aber ohne Erfolg. Momentan glauben wir nicht, dass CVS in seiner Funktionalität zu stark zunimmt.	|Subversion-Autoren haben wirklich einige Zeit mit der internen SVN-Architektur verbracht. Ich weiß immer noch nicht, wie gut einige Entscheidungen sind, die sie treffen. Aber eines ist klar, der Code ist gut erweiterbar und zukünftige Verbesserungen stehen an.
+|   
+
+**Fazit und Aussicht**, Die Durcharbeitung von 701.3 Source Code Management gab mir ein besseres Verständnis darüber was für Features und Eigenschaften Git hat, wie Git diese verwendet und wie man sie selber anwenden kann.
 
 ***
 </details>
