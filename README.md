@@ -639,23 +639,155 @@ Die typische Benutzeransicht einer Datei, die Revisionen enthält und von einer 
 <summary>Kapitel: 702.1 Container Usage</summary>
 <br>
 
-# Kapitel: 702.1 Container Usage (Status: In Arbeit)
+# Kapitel: 702.1 Container Usage (Status: Abgeschlossen)
 
 **Weight**: 7 (nur wer das Modul M300 nicht besucht hat + 7 Bonuspunkte). Es wird ein Beschrieb Linux Technologien und Container erwartet.
 
-**Beschreibung** Gegenüberstellung welche Linux Technologien für Container verwendet werden.
+**Beschreibung** Auflistung welche Linux Technologien für Container verwendet werden.
 
-**Tagesziele**, Erstellung einer Tabelle Linux - Container. 
+**Tagesziele**, Erstellung einer Auflistung zu Linux Container Technologien. 
 
-**Vorgehen**, Studieren Background Linux Namespaces vs. Container, UnionFS vs. Container Layer, Unix Prozesse (Jobs) vs. Docker run/start/stop
+**Vorgehen**, Hintergrund zu Linux Namespaces, Container, UnionFS, Container Layer, Unix Prozesse (Jobs) und Docker run/start/stop sammeln und auflisten.
 
 **Beispiele und Arbeitsergebnisse**
 
-| Linux          | Container      | Beschreibung      |
-| -------------- | -------------- | ----------------- |
-| Namespaces     | laufender Container | beim Starten des Containers wird in eine andere Linux Namespace gewechselt |
-| UnionFS        | Image Layer         | Container Verwenden UnionFileSysteme um .... |
-| Unix Prozesse  | run/start/stop      | docker run/start/stop Befehle ähneln dem .... Subsystem |
+## Namespaces
+Namespaces sind eine Funktion des Linux-Kernels , mit der Kernelressourcen so partitioniert werden, dass für einen Satz von Prozessen ein Satz von Ressourcen und für einen anderen Satz von Prozessen ein anderer Satz von Ressourcen angezeigt wird. Die Funktion verwendet denselben Namespace für diese Ressourcen in den verschiedenen Prozessgruppen, diese Namen beziehen sich jedoch auf unterschiedliche Ressourcen. Beispiele für Ressourcennamen, die in mehreren Bereichen vorhanden sein können, damit die benannten Ressourcen partitioniert werden, sind Prozess-IDs, Hostnamen, Benutzer-IDs, Dateinamen und einige Namen, die dem Netzwerkzugriff und der Interprozesskommunikation zugeordnet sind .
+Namespaces sind ein grundlegender Aspekt von Containern unter Linux.
+Der Begriff "Namespace" wird häufig für eine Art Namespace (z. B. Prozess-ID) sowie für einen bestimmten Namensraum verwendet.
+Ein Linux-System beginnt mit einem einzelnen Namespace jedes Typs, der von allen Prozessen verwendet wird. Prozesse können zusätzliche Namespaces erstellen und verschiedene Namespaces verbinden.
+
+
+## Container
+Ein Linux® Container besteht aus einem oder mehreren Prozessen, die vom Rest des Systems isoliert sind. Alle zur Ausführung notwendigen Dateien werden über ein separates Image bereitgestellt, d. h. Linux-Container sind von der Entwicklung über die Testphase bis hin zur Produktion stets portierbar und konsistent. Sie sind deshalb viel schneller als Entwicklungs-Pipelines, bei denen herkömmliche Testumgebungen repliziert werden. Wegen ihrer Beliebtheit und Benutzerfreundlichkeit sind Container ebenfalls ein wichtiger Bestandteil der IT-Sicherheit.
+
+
+## UnionFS
+UnionFS ist ein Dateisystem, das ursprünglich für das Plan-9-Betriebssystem entwickelt wurde. Es wurde dazu verwendet, Prozessen eigene Namensräume innerhalb der Dateisysteme zuzuweisen.
+Mittels UnionFS werden die Dateien verschiedener Dateisysteme zu einem einzigen logischen Dateisystem vereinigt, d. h. Dateien, die in den getrennten Dateisystemen im gleichen Verzeichnis liegen, werden durch UnionFS im selben Verzeichnis angezeigt. Dabei werden den einzelnen beteiligten Hierarchien Prioritäten zugeordnet, so dass eine eindeutige Zuordnung auch im Falle gleicher Dateinamen gewährleistet ist.
+Ein heutiger Einsatzzweck ist die Überlagerung von schreibgeschützten Dateisystemen mit RAM-Disks. Damit wird erreicht, dass Benutzer von Live-CDs lokale Dateien ändern können. Es kommt z. B. bei der Linux-Variante des Asus Eee PC zum Einsatz.
+UnionFS wurde sowohl für Linux als auch für diverse BSD-Varianten implementiert und wird zum Beispiel bei Live-CDs von Damn Small Linux erfolgreich eingesetzt.
+
+
+## Container Layer
+Docker-Container sind Bausteine ​​für Anwendungen. Jeder Container ist ein Bild mit einer read/write Ebene über einer Reihe schreibgeschützter Ebenen.
+Diese Ebenen (auch als Zwischenbilder bezeichnet) werden generiert, wenn die Befehle in der Docker-Datei während der Erstellung des Docker-Images ausgeführt werden.
+Hier ist beispielsweise eine Docker-Datei zum Erstellen eines Web-App- Images für node.js. Es werden die Befehle angezeigt, die zum Erstellen des Abbilds ausgeführt werden.
+
+    FROM node:argon
+    # Create app directory
+    RUN mkdir -p /usr/src/app
+    WORKDIR /usr/src/app
+    # Install app dependencies
+    COPY package.json /usr/src/app/
+    RUN npm install
+    # Bundle app source
+    COPY . /usr/src/app
+    EXPOSE 8080
+    CMD [ "npm", "start" ]
+
+Wenn Docker den Container aus der obigen Docker-Datei erstellt, entspricht jeder Schritt einem Befehl, der in der Docker-Datei ausgeführt wird. Jede Ebene besteht aus der Datei, die durch Ausführen dieses Befehls generiert wurde. Zusammen mit jedem Schritt wird der erstellte Layer durch seine zufällig generierte ID dargestellt. Beispielsweise lautet die Layer-ID für Schritt 1 530c750a346e.
+
+    $ docker build -t expressweb .
+    Step 1 : FROM node:argon
+    argon: Pulling from library/node...
+    ...
+    Status: Downloaded newer image for node:argon
+     ---> 530c750a346e
+    Step 2 : RUN mkdir -p /usr/src/app
+     ---> Running in 5090fde23e44
+     ---> 7184cc184ef8
+    Removing intermediate container 5090fde23e44
+    Step 3 : WORKDIR /usr/src/app
+     ---> Running in 2987746b5fba
+     ---> 86c81d89b023
+    Removing intermediate container 2987746b5fba
+    Step 4 : COPY package.json /usr/src/app/
+     ---> 334d93a151ee
+    Removing intermediate container a678c817e467
+    Step 5 : RUN npm install
+     ---> Running in 31ee9721cccb
+     ---> ecf7275feff3
+    Removing intermediate container 31ee9721cccb
+    Step 6 : COPY . /usr/src/app
+     ---> 995a21532fce
+    Removing intermediate container a3b7591bf46d
+    Step 7 : EXPOSE 8080
+     ---> Running in fddb8afb98d7
+     ---> e9539311a23e
+    Removing intermediate container fddb8afb98d7
+    Step 8 : CMD npm start
+     ---> Running in a262fd016da6
+     ---> fdd93d9c2c60
+    Removing intermediate container a262fd016da6
+    Successfully built fdd93d9c2c60
+
+Sobald das build erstellt wurde, können Sie mit dem Befehl docker history alle Ebenen anzeigen, aus denen das build besteht. Die Spalte "build" (d.h. Zwischenbild oder Ebene) zeigt die zufällig generierte UUID, die mit dieser Ebene korreliert.
+
+    docker history <image>
+    $ docker history expressweb
+    IMAGE         CREATED    CREATED BY                       SIZE      
+    fdd93d9c2c60  2 days ago /bin/sh -c CMD ["npm" "start"]   0 B
+    e9539311a23e  2 days ago /bin/sh -c EXPOSE 8080/tcp       0 B
+    995a21532fce  2 days ago /bin/sh -c COPY dir:50ab47bff7   760 B
+    ecf7275feff3  2 days ago /bin/sh -c npm install           3.439 MB
+    334d93a151ee  2 days ago /bin/sh -c COPY file:551095e67   265 B
+    86c81d89b023  2 days ago /bin/sh -c WORKDIR /usr/src/app  0 B
+    7184cc184ef8  2 days ago /bin/sh -c mkdir -p /usr/src/app 0 B
+    530c750a346e  2 days ago /bin/sh -c CMD ["node"]          0 B
+
+Jede Zeile unter "Image" oben ist ein Layer eines Containers.
+
+
+## Linux jobs & processes
+Ein Prozess ist ein laufendes Programm mit einem eigenen Adressraum.
+Ein Job ist ein Konzept, das von der Shell verwendet wird. Jedes Programm, dass man interaktiv startet und das sich nicht beendet (d.h. kein Daemon), ist ein Job. Wenn man ein interaktives Programm ausführt, kann man Ctrl+Z drücken, um es anzuhalten. Dann kann es wieder im Vordergrund (mit fg) oder im Hintergrund (mit bg) starten.
+
+Während das Programm angehalten wird oder im Hintergrund ausgeführt wird, kann man ein anderes Programm starten. In diesem Fall werden zwei Jobs ausgeführt. Man kann auch ein Programm im Hintergrund laufen lassen, indem man ein „&“ wie folgt anhängt
+
+    program &
+
+. Dieses Programm wird als Hintergrundjob ausgeführt werden.
+
+## Docker run/start/stop
+### docker run
+Der Grundbefehl docker runhat folgende Form:
+
+    docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
+
+Der docker runBefehl muss ein IMAGE angeben , von dem der Container abgeleitet werden soll. Ein Bildentwickler kann Bildstandards definieren, die sich auf Folgendes beziehen:
+
+* Ob er im Hintergrund oder im Vordergrund läuft
+* Container identifikation
+* Netzwerkeinstellungen
+* Laufzeitbeschränkungen für CPU und Speicher
+
+Mit dem kann docker run [OPTIONS] ein operator die von einem Entwickler eingestellten buildvorgaben ergänzen oder überschreiben. Außerdem können operatoren fast alle Standardeinstellungen überschreiben, die von der Docker-Laufzeit selbst festgelegt wurden. Aufgrund der Möglichkeit des operators, die Standardeinstellungen für Image- und Docker-Laufzeit zu überschreiben, verfügt run über mehr Optionen als jeder andere docker Befehl.
+
+### docker start
+Dieser Befehl strartet einen oder mehrere gestoppte Container.<br>
+Der Grundbefehl docker runhat folgende Form:
+
+    docker start [OPTIONS] CONTAINER [CONTAINER...]
+
+| Name, Kurzform          | Beschreibung      |
+| -------------- | -------------- |
+| --attach , -a     | STDOUT / STDERR anhängen und Signale weiterleiten |
+| --checkpoint	        | Wiederherstellen von diesem Checkpoint
+       |
+| --checkpoint-dir  | Verwenden von einem benutzerdefinierten Checkpoint-Speicherverzeichnis     |
+| --detach-keys	  | Überschreibt die Tastenfolge zum Entfernen eines Containers     |
+| --interactive , -i  | 	Befestigen des STDIN eines Containers    |
+
+### docker stop
+Stoppen von einen oder mehrere laufende Container.<br>
+Der Grundbefehl docker runhat folgende Form:
+
+    docker stop [OPTIONS] CONTAINER [CONTAINER...]
+
+| Name, Kurzform          | Standard      | Beschreibung |
+| -------------- | -------------- | -------------- |
+| --time , -t    | 10 | Sekunden, um auf Stopp zu warten, bevor der Container gestoppt wird |
 
 **Fazit und Aussicht**, Die Durcharbeitung von 702.1 Container Management gab mir ein besseres Verständnis über die Funktionsweise von Containern.
 
