@@ -35,7 +35,8 @@ Dokumention über den Lern- und Entwicklungsprozesses mit Ausgesuchten Unterkapi
 | 12.06.19 | 702.1 Container Usage | 7 |
 | 19.06.19 | 702.2 Container Deployment and Orchestration | 5 |
 | 26.06.19 | LB1 Theoretische Prüfung und Abschluss LB2 | - |
-| 03.07.19 | Sommersporttage | - |
+| 03.07.19 | Konvent TBZ | - |
+| 10.07.19 | Sommersporttage | - |
 |          | Total Punkte | 39
 
 <br>
